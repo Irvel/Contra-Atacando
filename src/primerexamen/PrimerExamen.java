@@ -74,7 +74,8 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
         /* Crea un número de personajes malos y buenos; y los almacena en
          * sus respectivos arreglos */
         crearMalos((int)(Math.random() * 2) + 8);
-        crearBuenos((int)(Math.random() * 5) + 10);
+        // Genera de 10 a 13 buenos de forma aleatoria
+        crearBuenos((int)(Math.random() * 4) + 10);
 
         // Crea la imagen de fondo.
         URL urlImagenFondo = this.getClass().getResource("sTatooine.jpg");
