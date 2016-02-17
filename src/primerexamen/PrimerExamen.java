@@ -12,7 +12,6 @@ import java.awt.event.KeyListener;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Vector;
 
 /**
  *
@@ -39,8 +38,9 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     private static final int IWIDTH = 800;
     private static final int IHEIGHT = 600;
     private String sNombreArchivo;       // Nombre del archivo
-    private Vector vec;                  // Vector para agregar el puntaje
     private String[] arr;                // Arreglo del archivo divido.
+    private int iCantidadMalos;         //Cantidad al azar de malos
+    private int iCantidadBuenos;        //Cantidad al azar de buenos
 
 
 
@@ -59,7 +59,6 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     
     public void init(){
         sNombreArchivo = "Puntaje.txt";
-        vec = new Vector();
         iVidas = 5;
         iScore = 0;
         iTeclaActual = 0;
@@ -82,10 +81,12 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
          * sus respectivos arreglos */
 
         // Genera de 8 a 10 malos de forma aleatoria
-        cargarMalos((int)(Math.random() * 3) + 8);
+        iCantidadMalos = (int)(Math.random() * 3) + 8;
+        cargarMalos(iCantidadMalos);
 
         // Genera de 10 a 13 buenos de forma aleatoria
-        crearBuenos((int)(Math.random() * 4) + 10);
+        iCantidadBuenos = (int)(Math.random() * 4) + 10;
+        crearBuenos(iCantidadBuenos);
 
         // Crea la imagen de fondo.
         URL urlImagenFondo = this.getClass().getResource("sTatooine.jpg");
@@ -486,8 +487,6 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                                     this);
                 //Dibuja los objetos principales del Applet
                 basJugador.paint(graDibujo, this);
-                System.out.println(basJugador.getX());
-                System.out.println(basJugador.getY());
                 for (Personaje perMalo : arrMalos) {
                     perMalo.paint(graDibujo, this);
                 }
@@ -527,10 +526,40 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         }
         String sDato = fileIn.readLine();
         while (sDato != null){
-            arr = sDato.split(",");
-            int num = (Integer.parseInt(arr[0]));
-            vec.add(num);
+            int num = (Integer.parseInt(sDato));
+            iVidas = num;
+            
             sDato = fileIn.readLine();
+            num = (Integer.parseInt(sDato));
+            iScore = num;
+            sDato = fileIn.readLine();
+            num = (Integer.parseInt(sDato));
+            iCantidadMalos = num;
+            for (int iC = 0; iC < iCantidadMalos;++iC){
+                sDato = fileIn.readLine();
+                num = (Integer.parseInt(sDato));
+                arrMalos.get(iC).setX(num);
+                sDato = fileIn.readLine();
+                num = (Integer.parseInt(sDato));
+                arrMalos.get(iC).setY(num);
+            }
+            sDato = fileIn.readLine();
+            num = (Integer.parseInt(sDato));
+            iCantidadBuenos = num;
+            for (int iC = 0; iC < iCantidadBuenos;++iC){
+                sDato = fileIn.readLine();
+                num = (Integer.parseInt(sDato));
+                arrBuenos.get(iC).setX(num);
+                sDato = fileIn.readLine();
+                num = (Integer.parseInt(sDato));
+                arrBuenos.get(iC).setY(num);
+            }
+            sDato = fileIn.readLine();
+            num = (Integer.parseInt(sDato));
+            basJugador.setX(num);
+            sDato = fileIn.readLine();
+            num = (Integer.parseInt(sDato));
+            basJugador.setY(num);
         }
         fileIn.close();
     }
@@ -539,6 +568,19 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         PrintWriter fileOut = new PrintWriter(new FileWriter(sNombreArchivo));
         fileOut.println(iVidas);
         fileOut.println(iScore);
+        fileOut.println(iCantidadMalos);
+        for (int iC = 0; iC < iCantidadMalos;++iC){
+            fileOut.println(arrMalos.get(iC).getX());
+            fileOut.println(arrMalos.get(iC).getY());
+        }
+        fileOut.println(iCantidadBuenos);
+        for (int iC = 0; iC < iCantidadBuenos;++iC){
+            fileOut.println(arrBuenos.get(iC).getX());
+            fileOut.println(arrBuenos.get(iC).getY());
+        }
+        fileOut.println(basJugador.getX());
+        fileOut.println(basJugador.getY());
+        
         fileOut.close();
     }
 
