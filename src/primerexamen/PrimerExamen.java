@@ -285,6 +285,8 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
                 break;
         }
         iTeclaActual = 0;  // Reestablecer la útima tecla presionada a ninguna
+        moverPersonajes();
+        animarMalos();
 
         if(iContGolpe >= 5){
             iVidas--;
@@ -293,6 +295,7 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
         }
     }
 
+    private void moverPersonajes() {
         // Mueve a los personajes malos
         for(Personaje perMalo : arrMalos){
             perMalo.setX(perMalo.getX() - perMalo.getVel());
@@ -301,13 +304,6 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
         for(Personaje perBueno : arrBuenos){
             perBueno.setX(perBueno.getX() + perBueno.getVel());
         }
-        animarMalos();
-
-        if(iContGolpe >= 5){
-            iVidas--;
-            iContGolpe = 0;
-        }
-
     }
 
     private void animarMalos() {
