@@ -83,6 +83,10 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
         URL urlImagenFondo = this.getClass().getResource("sTatooine.jpg");
         imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
 
+        // Crea la imagen para el fin del juego
+        URL urlGameOver = this.getClass().getResource("gameOver.png");
+        imaGameOver = Toolkit.getDefaultToolkit().getImage(urlGameOver);
+
         // Carga los sonidos de colisiones
         cargarSonidos();
         addKeyListener(this);
