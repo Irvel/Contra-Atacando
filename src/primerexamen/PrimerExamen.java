@@ -5,23 +5,13 @@
  */
 package primerexamen;
 
-import java.applet.AudioClip;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.Image;
-import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.event.KeyListener;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
-import javax.swing.JFrame;
-import java.awt.Toolkit;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Vector;
 
 /**
@@ -157,7 +147,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     private void crearMalos(int iCantidad) {
         arrMalos = new ArrayList<>();
         for (int i = 0; i < iCantidad; i++) {
-            //Genera una posición aleatoria fuera del applet por la izquierda
+            //Genera una posición aleatoria fuera del applet por la derecha
             int iPosX = getXRandom() + 800;
             int iPosY = getYRandom();
 
@@ -184,7 +174,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         Image imaBueno = Toolkit.getDefaultToolkit().getImage(urlImaBueno);
 
         for (int i = 0; i < iCantidad; i++) {
-            // Genera una posición aleatoria fuera del applet por la derecha
+            // Genera una posición aleatoria fuera del applet por la izquierda
             int iPosX = getXRandom() - 800;
             int iPosY = getYRandom();
 
