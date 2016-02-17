@@ -286,6 +286,12 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
         }
         iTeclaActual = 0;  // Reestablecer la útima tecla presionada a ninguna
 
+        if(iContGolpe >= 5){
+            iVidas--;
+            sMalo.play();
+            iContGolpe = 0;
+        }
+    }
 
         // Mueve a los personajes malos
         for(Personaje perMalo : arrMalos){
