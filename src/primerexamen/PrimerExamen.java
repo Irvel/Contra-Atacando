@@ -86,7 +86,6 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         iVidas = 5;
         iScore = 0;
         iTeclaActual = 0;
-        cargarJugador();
 
         // Genera de 8 a 10 malos de forma aleatoria
         iCantidadMalos = (int)(Math.random() * 3) + 8;
@@ -103,6 +102,9 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         // Crea la imagen para el fin del juego
         URL urlGameOver = this.getClass().getResource("gameOver.png");
         imaGameOver = Toolkit.getDefaultToolkit().getImage(urlGameOver);
+
+        // Crea el jugador principal
+        cargarJugador();
 
         // Carga los sonidos de colisiones
         cargarSonidos();
@@ -797,8 +799,8 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     public void keyReleased(KeyEvent key) {
 
     }
-    
-    
+
+
     public static void main(String [] args){
         PrimerExamen hola = new PrimerExamen();
         hola.setSize(IWIDTH,IHEIGHT);
