@@ -1,8 +1,28 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+The MIT License (MIT)
+
+Copyright (c) 2016 Irvel Nduva, Jorge Vazquez
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
 package primerexamen;
 
 import javax.swing.*;
@@ -12,74 +32,61 @@ import java.awt.event.KeyListener;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Vector;
+
 
 /**
+ * PrimerExamen
+ *
+ * Juego en <code>JFrame</code> que presenta un jugador principal que puede
+ * ser controlado con las teclas Q, A, P, L. El objetivo del juego es esquivar
+ * los asteroides que entran por el lado derecho y atrapar las galletas que
+ * entran por el lado izquierdo; ambos de forma aleatoria.
+ *
  *
  * @author Irvel
+ * @author Jorge
+ * @version 0.3
+ * @date 17/02/2016
  */
+
+
 public class PrimerExamen extends JFrame implements Runnable, KeyListener {
   
-    private Base basJugador;
-    private ArrayList<Personaje> arrMalos;
-    private ArrayList<Personaje> arrBuenos;
-    private Image imaImagenFondo;        // Para dibujar la imagen de fondo
-    private Image imaGameOver;           // Para dibujar la imagen final
-    private int iVidas;                  // El # de vidas del jugador
-    private int iScore;                  // El score del jugador
+    private Base basJugador;                // El objeto del jugador
+    private ArrayList<Personaje> arrMalos;  // Lista de personajes malos
+    private ArrayList<Personaje> arrBuenos; // Lista de personajes buenos
+    private Image imaImagenFondo;           // Para dibujar la imagen de fondo
+    private Image imaGameOver;              // Para dibujar la imagen final
+    private int iVidas;                     // El # de vidas del jugador
+    private int iScore;                     // El score del jugador
 
     // El numero de veces que le jugador ha golpeado un malo
     private int iContGolpe;
-    private int iTeclaActual;            // Almacena la ultima tecla presionada
-    private long lTiempoActual;          // El tiempo desde la ultima
-    private Image imaImagenApplet;       // Imagen a proyectar en Applet
-    private Graphics graGraficaApplet;   // Objeto grafico de la Imagen
-    private SoundClip sBueno;            // Sonido colision con un bueno
-    private SoundClip sMalo;             // Sonido colision con un malo
-    private static final int IWIDTH = 800;
-    private static final int IHEIGHT = 600;
-    private String sNombreArchivo;       // Nombre del archivo
-    private Vector vec;                  // Vector para agregar el puntaje
-    private String[] arr;                // Arreglo del archivo divido.
-
+    private int iTeclaActual;                 // La ultima tecla presionada
+    private long lTiempoActual;               // El tiempo desde la ultima
+    private Image imaImagenApplet;            // Imagen a proyectar en JFrame
+    private Graphics graGraficaApplet;        // Objeto grafico de la Imagen
+    private SoundClip sBueno;                 // Sonido colision con un bueno
+    private SoundClip sMalo;                  // Sonido colision con un malo
+    private static final int IWIDTH = 800;    // El ancho del JFrame
+    private static final int IHEIGHT = 600;   // El alto del JFrame
+    private String sNombreArchivo;            // Nombre del archivo
 
 
     /**
-     * PrimerExamen()
+     * init()
      *
-     * Metodo sobrescrito de la clase <code>JFrame</code>.<P>
-     * En este metodo se inizializan las variables o se crean los objetos
-     * a usarse en el <code>Applet</code> y se definen funcionalidades.
+     * Método que inicializa las variables miembro de la clase PrimerExamen.
+     * También crea los objetos a ser utilizados en el <code>JFrame</code>.
      *
      */
 
-     /*
-     *Constructor default
-     */
-    
     public void init(){
         sNombreArchivo = "Puntaje.txt";
-        vec = new Vector();
         iVidas = 5;
         iScore = 0;
         iTeclaActual = 0;
-        // Define la imagen del jugador principal
-        URL urlJugador = this.getClass().getResource("sJugador.gif");
-
-        // Calcula el centro tomando en cuenta las dimensiones del jugador
-        int iMitadX = (IWIDTH / 2) - (90 / 2);
-        int iMitadY = (IHEIGHT / 2) - (121 / 2);
-
-        // Crea el objeto del jugador principal en el centro del mapa
-        
-        basJugador = new Base(iMitadX,
-                              iMitadY,
-                              10,
-                              10,
-                              Toolkit.getDefaultToolkit().getImage(urlJugador));
-
-        /* Crea un número de personajes malos y buenos; y los almacena en
-         * sus respectivos arreglos */
+        cargarJugador();
 
         // Genera de 8 a 10 malos de forma aleatoria
         cargarMalos((int)(Math.random() * 3) + 8);
@@ -95,15 +102,32 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         URL urlGameOver = this.getClass().getResource("gameOver.png");
         imaGameOver = Toolkit.getDefaultToolkit().getImage(urlGameOver);
 
+        // Carga los sonidos de colisiones
+        cargarSonidos();
+
+        addKeyListener(this);
     }
-    
+
+    private void cargarJugador() {
+        // Define la imagen del jugador principal
+        URL urlJugador = this.getClass().getResource("sJugador.gif");
+
+        // Calcula el centro tomando en cuenta las dimensiones del jugador
+        int iMitadX = (IWIDTH / 2) - (90 / 2);
+        int iMitadY = (IHEIGHT / 2) - (121 / 2);
+
+        // Crea el objeto del jugador principal en el centro del mapa
+        basJugador = new Base(iMitadX,
+                              iMitadY,
+                              10,
+                              10,
+                              Toolkit.getDefaultToolkit().getImage(urlJugador));
+    }
+
     public PrimerExamen() {
         init();
         Thread th = new Thread(this);
         th.start();
-        // Carga los sonidos de colisiones
-        cargarSonidos();
-        addKeyListener(this);
     }
     
     
@@ -528,9 +552,6 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         }
         String sDato = fileIn.readLine();
         while (sDato != null){
-            arr = sDato.split(",");
-            int num = (Integer.parseInt(arr[0]));
-            vec.add(num);
             sDato = fileIn.readLine();
         }
         fileIn.close();
