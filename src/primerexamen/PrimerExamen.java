@@ -1,8 +1,28 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+The MIT License (MIT)
+
+Copyright (c) 2016 Irvel Nduva, Jorge Vazquez
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
 package primerexamen;
 
 import javax.swing.*;
@@ -13,72 +33,61 @@ import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 
+
 /**
+ * PrimerExamen
+ *
+ * Juego en <code>JFrame</code> que presenta un jugador principal que puede
+ * ser controlado con las teclas Q, A, P, L. El objetivo del juego es esquivar
+ * los asteroides que entran por el lado derecho y atrapar las galletas que
+ * entran por el lado izquierdo; ambos de forma aleatoria.
+ *
  *
  * @author Irvel
+ * @author Jorge
+ * @version 0.3
+ * @date 17/02/2016
  */
+
+
 public class PrimerExamen extends JFrame implements Runnable, KeyListener {
   
-    private Base basJugador;
-    private ArrayList<Personaje> arrMalos;
-    private ArrayList<Personaje> arrBuenos;
-    private Image imaImagenFondo;        // Para dibujar la imagen de fondo
-    private Image imaGameOver;           // Para dibujar la imagen final
-    private int iVidas;                  // El # de vidas del jugador
-    private int iScore;                  // El score del jugador
+    private Base basJugador;                // El objeto del jugador
+    private ArrayList<Personaje> arrMalos;  // Lista de personajes malos
+    private ArrayList<Personaje> arrBuenos; // Lista de personajes buenos
+    private Image imaImagenFondo;           // Para dibujar la imagen de fondo
+    private Image imaGameOver;              // Para dibujar la imagen final
+    private int iVidas;                     // El # de vidas del jugador
+    private int iScore;                     // El score del jugador
 
     // El numero de veces que le jugador ha golpeado un malo
     private int iContGolpe;
-    private int iTeclaActual;            // Almacena la ultima tecla presionada
-    private long lTiempoActual;          // El tiempo desde la ultima
-    private Image imaImagenApplet;       // Imagen a proyectar en Applet
-    private Graphics graGraficaApplet;   // Objeto grafico de la Imagen
-    private SoundClip sBueno;            // Sonido colision con un bueno
-    private SoundClip sMalo;             // Sonido colision con un malo
-    private static final int IWIDTH = 800;
-    private static final int IHEIGHT = 600;
-    private String sNombreArchivo;       // Nombre del archivo
-    private String[] arr;                // Arreglo del archivo divido.
-    private int iCantidadMalos;         //Cantidad al azar de malos
-    private int iCantidadBuenos;        //Cantidad al azar de buenos
-
-
+    private int iCantidadMalos;               // Cantidad al azar de malos
+    private int iCantidadBuenos;              // Cantidad al azar de buenos
+    private int iTeclaActual;                 // La ultima tecla presionada
+    private long lTiempoActual;               // El tiempo desde la ultima
+    private Image imaImagenApplet;            // Imagen a proyectar en JFrame
+    private Graphics graGraficaApplet;        // Objeto grafico de la Imagen
+    private SoundClip sBueno;                 // Sonido colision con un bueno
+    private SoundClip sMalo;                  // Sonido colision con un malo
+    private static final int IWIDTH = 800;    // El ancho del JFrame
+    private static final int IHEIGHT = 600;   // El alto del JFrame
+    private String sNombreArchivo;            // Nombre del archivo
 
     /**
-     * PrimerExamen()
+     * init()
      *
-     * Metodo sobrescrito de la clase <code>JFrame</code>.<P>
-     * En este metodo se inizializan las variables o se crean los objetos
-     * a usarse en el <code>Applet</code> y se definen funcionalidades.
+     * Método que inicializa las variables miembro de la clase PrimerExamen.
+     * También crea los objetos a ser utilizados en el <code>JFrame</code>.
      *
      */
 
-     /*
-     *Constructor default
-     */
-    
     public void init(){
         sNombreArchivo = "Puntaje.txt";
         iVidas = 5;
         iScore = 0;
         iTeclaActual = 0;
-        // Define la imagen del jugador principal
-        URL urlJugador = this.getClass().getResource("sJugador.gif");
-
-        // Calcula el centro tomando en cuenta las dimensiones del jugador
-        int iMitadX = (800 / 2) - (90 / 2);
-        int iMitadY = (600 / 2) - (121 / 2);
-
-        // Crea el objeto del jugador principal en el centro del mapa
-        
-        basJugador = new Base(iMitadX,
-                              iMitadY,
-                              10,
-                              10,
-                              Toolkit.getDefaultToolkit().getImage(urlJugador));
-
-        /* Crea un número de personajes malos y buenos; y los almacena en
-         * sus respectivos arreglos */
+        cargarJugador();
 
         // Genera de 8 a 10 malos de forma aleatoria
         iCantidadMalos = (int)(Math.random() * 3) + 8;
@@ -99,9 +108,40 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         // Carga los sonidos de colisiones
         cargarSonidos();
         addKeyListener(this);
-
     }
-    
+
+    /**
+     * cargarJugador()
+     *
+     * Método carga la imagen del jugador de disco, inicializa su posición en
+     * el centro del JFrame y crea el objeto <code>Base</code> del jugado.
+     *
+     */
+
+    private void cargarJugador() {
+        // Define la imagen del jugador principal
+        URL urlJugador = this.getClass().getResource("sJugador.gif");
+
+        // Calcula el centro tomando en cuenta las dimensiones del jugador
+        int iMitadX = (IWIDTH / 2) - (90 / 2);
+        int iMitadY = (IHEIGHT / 2) - (121 / 2);
+
+        // Crea el objeto del jugador principal en el centro del mapa
+        basJugador = new Base(iMitadX,
+                              iMitadY,
+                              10,
+                              10,
+                              Toolkit.getDefaultToolkit().getImage(urlJugador));
+    }
+
+    /**
+     * PrimerExamen()
+     *
+     * Método constructor del JFrame PrimerExamen que manda inicializar las
+     * variables miembro y crea el <code>Thread</code> principal del Juego.
+     *
+     */
+
     public PrimerExamen() {
         init();
         Thread th = new Thread(this);
@@ -110,7 +150,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     
     
     /**
-     * cargarMalos
+     * cargarMalos()
      *
      * Método que carga las imágenes individuales que componen la animación
      * del asteroide
@@ -138,13 +178,15 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
 
     /**
-     * crearMalos
+     * crearMalos()
      *
      * Método que crea una cantidad pre-determinada de personajes malos con
      * coordenadas aleatorias fuera del applet de la parte derecha. Utiliza
      * las imagenes ya cargadas de los en arrImaMalo
      *
      * @param iCantidad es el <code>número</code> de objetos malos a crear.
+     * @param arrCuadros es un <code>ArrayList</code> de CuadroDeAnimación
+     *                   para crear la animación de cada personaje.
      *
      */
 
@@ -152,7 +194,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         arrMalos = new ArrayList<>();
         for (int i = 0; i < iCantidad; i++) {
             //Genera una posición aleatoria fuera del applet por la derecha
-            int iPosX = getXRandom() + 800;
+            int iPosX = getXRandom() + IWIDTH;
             int iPosY = getYRandom();
 
             // Agregar un objeto nuevo de personaje con velocidad de 3 o 5
@@ -166,7 +208,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
 
     /**
-     * crearBuenos
+     * crearBuenos()
      *
      * Método que carga la imagen de los personajes buenos y genera una
      * cantidad pre-determinada de personajes buenos con coordenadas
@@ -185,7 +227,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
         for (int i = 0; i < iCantidad; i++) {
             // Genera una posición aleatoria fuera del applet por la izquierda
-            int iPosX = getXRandom() - 800;
+            int iPosX = getXRandom() - IWIDTH;
             int iPosY = getYRandom();
 
             // Agregar un objeto nuevo de personaje con velocidad de 1 o 3
@@ -195,7 +237,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
 
     /**
-     * cargarSonidos
+     * cargarSonidos()
      *
      * Método que carga los sonidos de las colisiones con el bueno y con el malo
      *
@@ -217,7 +259,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      *
      */
     private int getXRandom(){
-        return (int)(Math.random() * (800));
+        return (int)(Math.random() * (IWIDTH));
     }
 
 
@@ -229,32 +271,14 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      *
      */
     private int getYRandom(){
-        int iYRandom = (int)(Math.random() * (551) + 50);
+        // Generar coordenada tomando en cuenta la barra superior del JFrame
+        int iYRandom = (int)(Math.random() * (IHEIGHT - 49) + 50);
+
         // Evitar que llegue a aparecer debajo del eje Y
-        iYRandom = iYRandom > 600 - 100 ? 600 - 100 : iYRandom;
+        iYRandom = iYRandom > IHEIGHT - 100 ? IHEIGHT - 100 : iYRandom;
         return iYRandom;
     }
 
-
-
-    /**
-     * start
-     *
-     * Metodo sobrescrito de la clase <code>Applet</code>.<P>
-     * En este metodo se crea e inicializa el hilo
-     * para la animacion este metodo es llamado despues del init o
-     * cuando el usuario visita otra pagina y luego regresa a la pagina
-     * en donde esta este <code>Applet</code>
-     *
-     */
-    /*
-    @Override
-    public void start () {
-        // Declara un hilo
-        Thread th = new Thread (this);
-        // Empieza el hilo
-        th.start ();
-    }
 
     /**
      * run
@@ -287,6 +311,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
             }
         }
     }
+
 
     /**
      * actualiza
@@ -325,6 +350,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         }
     }
 
+
     private void moverPersonajes() {
         // Mueve a los personajes malos
         for(Personaje perMalo : arrMalos){
@@ -335,6 +361,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
             perBueno.setX(perBueno.getX() + perBueno.getVel());
         }
     }
+
 
     private void animarMalos() {
         // Calcula el tiempo transcurrido desde la iteracion previa
@@ -476,7 +503,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      *
      */
     public void paint1(Graphics graDibujo) {
-        // si la imagen ya se cargo
+        // Verificar que la imagen ya haya sido cargada
         if (basJugador != null && imaImagenFondo != null) {
             if(iVidas > 0) {
                 // Dibuja la imagen de fondo
@@ -486,8 +513,10 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                                     getWidth(),
                                     getHeight(),
                                     this);
-                //Dibuja los objetos principales del Applet
+
+                // Dibuja los objetos principales del Applet
                 basJugador.paint(graDibujo, this);
+
                 for (Personaje perMalo : arrMalos) {
                     perMalo.paint(graDibujo, this);
                 }
@@ -499,6 +528,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                                      50, 50);
             }
             else{
+                // Dibujar la imagen de GameOver cuando se acaben las vidas
                 graDibujo.drawImage(imaGameOver,
                                     0,
                                     0,
@@ -507,9 +537,8 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                                     this);
             }
         }
-        // sino se ha cargado se dibuja un mensaje
         else {
-            //Da un mensaje mientras se carga el dibujo
+            // Desplegar un mensaje mientras se carga el dibujo
             graDibujo.drawString("No se cargo la imagen..", 20, 20);
         }
     }
@@ -525,33 +554,22 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
             fileOut.close();
             fileIn = new BufferedReader(new FileReader(sNombreArchivo));
         }
-        String sDato = fileIn.readLine();
-        int num = (Integer.parseInt(sDato));
-        iVidas = num;
+        iVidas = (Integer.parseInt(fileIn.readLine()));
         leerPersonajesArchivo(fileIn);
         fileIn.close();
     }
 
     private void leerPersonajesArchivo(BufferedReader fileIn) throws
                                                               IOException {
-        String sDato;
         int num;
-        sDato = fileIn.readLine();
-        num = (Integer.parseInt(sDato));
-        iScore = num;
-        sDato = fileIn.readLine();
-        num = (Integer.parseInt(sDato));
-        iCantidadMalos = num;
+        iScore = (Integer.parseInt(fileIn.readLine()));
+        iCantidadMalos = (Integer.parseInt(fileIn.readLine()));
         leeMalosArchivo(fileIn);
-        sDato = fileIn.readLine();
-        num = (Integer.parseInt(sDato));
-        iCantidadBuenos = num;
+        iCantidadBuenos = (Integer.parseInt(fileIn.readLine()));
         leerBuenosArchivo(fileIn);
-        sDato = fileIn.readLine();
-        num = (Integer.parseInt(sDato));
+        num = (Integer.parseInt(fileIn.readLine()));
         basJugador.setX(num);
-        sDato = fileIn.readLine();
-        num = (Integer.parseInt(sDato));
+        num = (Integer.parseInt(fileIn.readLine()));
         basJugador.setY(num);
     }
 
