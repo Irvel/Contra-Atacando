@@ -10,22 +10,20 @@
  */
 package primerexamen;
 
-import java.awt.Graphics;
-import java.awt.Image;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.ImageObserver;
-import javax.swing.ImageIcon;
 
 public class Base {
 
-    private int iX;     //posicion en x.
-    private int iY;     //posicion en y.
-    private int iVelX;  // Velocidad en x
-    private int iVelY;  // Velocidad en y
-    private int iAncho; //ancho del objeto
-    private int iAlto; //largo del objeto
-    private Image imaImagen;	//imagen.
-    private ImageIcon imiImagen;  // imagen con medidas
-
+    private int iX;                 // Posicion en x.
+    private int iY;                 // Posicion en y.
+    private int iVelX;              // Velocidad en x
+    private int iVelY;              // Velocidad en y
+    private int iAncho;             // Ancho del objeto
+    private int iAlto;              // Largo del objeto
+    private Image imaImagen;        // Imagen
+    private Animacion aniPrincipal; // La animación del objeto
 
     /**
      * Base
