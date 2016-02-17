@@ -47,8 +47,8 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     private Graphics graGraficaApplet;   // Objeto grafico de la Imagen
     private SoundClip sBueno;        // Sonido colision con un bueno
     private SoundClip sMalo;        // Sonido colision con un malo
-    private static final int iWidth = 800;
-    private static final int iHeight = 600;
+    private static final int IWIDTH = 800;
+    private static final int IHEIGHT = 600;
     private String sNombreArchivo; //Nombre del archivo
     private Vector vec;            //Objecto vector para agregar el puntaje
     private String[] arr;           //Arreglo del archivo divido.
@@ -579,7 +579,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     
     public static void main(String [] args){
         PrimerExamen hola = new PrimerExamen();
-        hola.setSize(iWidth,iHeight);
+        hola.setSize(IWIDTH,IHEIGHT);
         hola.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         hola.setVisible(true);
     }
