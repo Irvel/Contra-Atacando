@@ -5,20 +5,20 @@
  */
 package primerexamen;
 
-import java.applet.Applet;
 import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.URL;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 
 /**
  *
  * @author Irvel
  */
-public class PrimerExamen extends Applet implements Runnable, KeyListener {
-
+public class PrimerExamen extends JFrame implements Runnable, KeyListener {
+  
     private Base basJugador;
     private ArrayList<Personaje> arrMalos;
     private ArrayList<Personaje> arrBuenos;
@@ -46,6 +46,8 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
      * a usarse en el <code>Applet</code> y se definen funcionalidades.
      *
      */
+    
+    
     public void init() {
         // Establece el applet de tamaño 800,480
         setSize(800,480);
@@ -73,19 +75,20 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
 
         /* Crea un número de personajes malos y buenos; y los almacena en
          * sus respectivos arreglos */
+   
         crearMalos((int)(Math.random() * 2) + 8);
-        crearBuenos((int)(Math.random() * 5) + 10);
+        //crearBuenos((int)(Math.random() * 5) + 10);
 
         // Crea la imagen de fondo.
         URL urlImagenFondo = this.getClass().getResource("sTatooine.jpg");
         imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
 
         // Carga los sonidos de colisiones
-        cargarSonidos();
+        //cargarSonidos();
         addKeyListener(this);
     }
-
-
+    
+    
     /**
      * cargarImaMalo
      *
@@ -93,6 +96,7 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
      * del asteroide
      *
      */
+   
     private void cargarImaMalo() {
         arrImaMalo = new Image[iMALOFRAMES];
         String sNomArchivo;
@@ -119,15 +123,16 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
      * @param iCantidad es el <code>número</code> de objetos malos a crear.
      *
      */
+
     private void crearMalos(int iCantidad) {
         arrMalos = new ArrayList<>();
         for (int i = 0; i < iCantidad; i++) {
             // Genera una posición aleatoria fuera del applet por la izquierda
-            int iPosX = getXRandom() + getWidth();
-            int iPosY = getYRandom();
+            //int iPosX = getXRandom() + getWidth();
+            //int iPosY = getYRandom();
 
             // Agregar un objeto nuevo de personaje con velocidad de 3 o 5
-            arrMalos.add(new Personaje(iPosX, iPosY, arrImaMalo[iFrameActual], 3, 5));
+            //arrMalos.add(new Personaje(iPosX, iPosY, arrImaMalo[iFrameActual], 3, 5));
         }
     }
 
@@ -142,6 +147,7 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
      * @param iCantidad es el <code>número</code> de objetos buenos a crear.
      *
      */
+/*
     private void crearBuenos(int iCantidad) {
         arrBuenos = new ArrayList<>();
 
@@ -165,6 +171,7 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
      * Método que carga los sonidos de las colisiones con el bueno y con el malo
      *
      */
+/*
     private void cargarSonidos() {
         URL urlColision1 = this.getClass().getResource("aPuntosGanados.wav");
         URL urlColision2 = this.getClass().getResource("aVidaPerdida.wav");
@@ -179,6 +186,7 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
      * encuentra dentro del applet actual.
      *
      */
+/*
     private int getXRandom(){
         return (int)(Math.random() * (getWidth()));
     }
@@ -190,6 +198,7 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
      * encuentra dentro del applet actual.
      *
      */
+/*
     private int getYRandom(){
         int iYRandom = (int)(Math.random() * (getHeight()));
         // Evitar que llegue a aparecer debajo del eje Y
@@ -209,6 +218,7 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
      * en donde esta este <code>Applet</code>
      *
      */
+/*
     @Override
     public void start () {
         // Declara un hilo
@@ -225,12 +235,14 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
      * de nuestro juego.
      *
      */
+/*
     @Override
     public void run () {
         /* mientras dure el juego, se actualizan posiciones de jugadores
            se checa si hubo colisiones para desaparecer jugadores o corregir
            movimientos y se vuelve a pintar todo
         */
+/*
         while (true && iVidas > 0) {
             actualiza();
             checaColision();
@@ -252,6 +264,7 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
      * Metodo que actualiza la posicion de los objetos
      *
      */
+/*
     public void actualiza(){
         // Mueve el jugador principal si es que se presionó una tecla
         switch(iTeclaActual) {
@@ -312,6 +325,7 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
      * de los objetos con los límites de la pantalla
      *
      */
+/*
     public void checaColision(){
         Rectangle recJugador = new Rectangle(basJugador.getX(),
                                              basJugador.getY(),
@@ -405,6 +419,7 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
      * @param graGrafico es el <code>objeto grafico</code> usado para dibujar.
      *
      */
+/*
     public void update (Graphics graGrafico){
         // Inicializan el DoubleBuffer
         if (imaImagenApplet == null){
@@ -430,6 +445,7 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
      * @param graDibujo es el objeto de <code>Graphics</code> usado para dibujar.
      *
      */
+/*
     @Override
     public void paint(Graphics graDibujo) {
         // si la imagen ya se cargo
@@ -482,6 +498,44 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
     @Override
     public void keyReleased(KeyEvent key) {
 
+    }
+    */
+    
+    public  PrimerExamen(){
+        setTitle("JFrame HolaMundo");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(200,200);
+    }
+    public void paint(Graphics g){
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, getWidth(), getHeight());
+        g.setColor(Color.BLACK);
+        g.drawString("HOLA MUNDO", this.getSize().width / 2 - 60, 
+                this.getSize().height / 2 + 9);
+    }
+    public static void main(String [] args){
+        PrimerExamen hola = new PrimerExamen();
+        hola.setVisible(true);
+    }
+
+    @Override
+    public void run() {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
