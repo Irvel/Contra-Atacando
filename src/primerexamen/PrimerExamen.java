@@ -67,8 +67,8 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         URL urlJugador = this.getClass().getResource("sJugador.gif");
 
         // Calcula el centro tomando en cuenta las dimensiones del jugador
-        int iMitadX = (800 / 2) - (90 / 2);
-        int iMitadY = (600 / 2) - (121 / 2);
+        int iMitadX = (IWIDTH / 2) - (90 / 2);
+        int iMitadY = (IHEIGHT / 2) - (121 / 2);
 
         // Crea el objeto del jugador principal en el centro del mapa
         
@@ -150,7 +150,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         arrMalos = new ArrayList<>();
         for (int i = 0; i < iCantidad; i++) {
             //Genera una posición aleatoria fuera del applet por la derecha
-            int iPosX = getXRandom() + 800;
+            int iPosX = getXRandom() + IWIDTH;
             int iPosY = getYRandom();
 
             // Agregar un objeto nuevo de personaje con velocidad de 3 o 5
@@ -183,7 +183,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
         for (int i = 0; i < iCantidad; i++) {
             // Genera una posición aleatoria fuera del applet por la izquierda
-            int iPosX = getXRandom() - 800;
+            int iPosX = getXRandom() - IWIDTH;
             int iPosY = getYRandom();
 
             // Agregar un objeto nuevo de personaje con velocidad de 1 o 3
@@ -215,7 +215,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      *
      */
     private int getXRandom(){
-        return (int)(Math.random() * (800));
+        return (int)(Math.random() * (IWIDTH));
     }
 
 
@@ -227,9 +227,9 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      *
      */
     private int getYRandom(){
-        int iYRandom = (int)(Math.random() * (600));
+        int iYRandom = (int)(Math.random() * (IHEIGHT));
         // Evitar que llegue a aparecer debajo del eje Y
-        iYRandom = iYRandom > 600 - 100 ? 600 - 100 : iYRandom;
+        iYRandom = iYRandom > IHEIGHT - 100 ? IHEIGHT - 100 : iYRandom;
         return iYRandom;
     }
 
@@ -474,7 +474,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      *
      */
     public void paint1(Graphics graDibujo) {
-        // si la imagen ya se cargo
+        // Verificar que la imagen ya haya sido cargada
         if (basJugador != null && imaImagenFondo != null) {
             if(iVidas > 0) {
                 // Dibuja la imagen de fondo
@@ -484,7 +484,8 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                                     getWidth(),
                                     getHeight(),
                                     this);
-                //Dibuja los objetos principales del Applet
+
+                // Dibuja los objetos principales del Applet
                 basJugador.paint(graDibujo, this);
                 System.out.println(basJugador.getX());
                 System.out.println(basJugador.getY());
@@ -499,6 +500,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                                      20, 20);
             }
             else{
+                // Dibujar la imagen de GameOver cuando se acaben las vidas
                 graDibujo.drawImage(imaGameOver,
                                     0,
                                     0,
@@ -507,9 +509,8 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                                     this);
             }
         }
-        // sino se ha cargado se dibuja un mensaje
         else {
-            //Da un mensaje mientras se carga el dibujo
+            // Desplegar un mensaje mientras se carga el dibujo
             graDibujo.drawString("No se cargo la imagen..", 20, 20);
         }
     }
