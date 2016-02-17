@@ -511,8 +511,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
                 // Dibuja los objetos principales del Applet
                 basJugador.paint(graDibujo, this);
-                System.out.println(basJugador.getX());
-                System.out.println(basJugador.getY());
+
                 for (Personaje perMalo : arrMalos) {
                     perMalo.paint(graDibujo, this);
                 }
