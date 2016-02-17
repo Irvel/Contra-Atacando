@@ -543,6 +543,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     
     public void grabaArchivo() throws IOException{
         PrintWriter fileOut = new PrintWriter(new FileWriter(sNombreArchivo));
+        fileOut.println(iVidas);
         fileOut.println(iScore);
         fileOut.close();
     }
