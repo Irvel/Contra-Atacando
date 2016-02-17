@@ -73,7 +73,9 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
 
         /* Crea un número de personajes malos y buenos; y los almacena en
          * sus respectivos arreglos */
-        crearMalos((int)(Math.random() * 2) + 8);
+        // Genera de 8 a 10 malos de forma aleatoria
+        crearMalos((int)(Math.random() * 3) + 8);
+
         // Genera de 10 a 13 buenos de forma aleatoria
         crearBuenos((int)(Math.random() * 4) + 10);
 
