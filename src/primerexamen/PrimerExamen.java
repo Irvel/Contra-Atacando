@@ -23,45 +23,41 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     private Base basJugador;
     private ArrayList<Personaje> arrMalos;
     private ArrayList<Personaje> arrBuenos;
-    private Image imaImagenFondo;         // para dibujar la imagen de fondo
-    private Image imaGameOver;         // para dibujar la imagen final
-    private Image arrImaMalo[];         // Arr para las frames del personaje malo
-    private final int iMALOFRAMES = 31;    // El # de frames del malo
-    private int iFrameActual;             // La frame actual en la animacion ast
-    private int iVidas;                   // El # de vidas del jugador
-    private int iScore;   // El score del jugador
+    private Image imaImagenFondo;        // Para dibujar la imagen de fondo
+    private Image imaGameOver;           // Para dibujar la imagen final
+    private int iVidas;                  // El # de vidas del jugador
+    private int iScore;                  // El score del jugador
+
+    // El numero de veces que le jugador ha golpeado un malo
     private int iContGolpe;
     private int iTeclaActual;            // Almacena la ultima tecla presionada
-    private boolean bFinJuego;
-    private Image imaImagenApplet;    // Imagen a proyectar en Applet
+    private long lTiempoActual;          // El tiempo desde la ultima
+    private Image imaImagenApplet;       // Imagen a proyectar en Applet
     private Graphics graGraficaApplet;   // Objeto grafico de la Imagen
-    private SoundClip sBueno;        // Sonido colision con un bueno
-    private SoundClip sMalo;        // Sonido colision con un malo
+    private SoundClip sBueno;            // Sonido colision con un bueno
+    private SoundClip sMalo;             // Sonido colision con un malo
     private static final int iWidth = 800;
     private static final int iHeight = 600;
-    private String sNombreArchivo; //Nombre del archivo
-    private Vector vec;            //Objecto vector para agregar el puntaje
-    private String[] arr;           //Arreglo del archivo divido.
+    private String sNombreArchivo;       // Nombre del archivo
+    private Vector vec;                  // Vector para agregar el puntaje
+    private String[] arr;                // Arreglo del archivo divido.
 
 
     /**
      * PrimerExamen()
      *
-     * Metodo sobrescrito de la clase <code>Applet</code>.<P>
+     * Metodo sobrescrito de la clase <code>JFrame</code>.<P>
      * En este metodo se inizializan las variables o se crean los objetos
      * a usarse en el <code>Applet</code> y se definen funcionalidades.
      *
      */
-    
-    
+
     public PrimerExamen() {
         sNombreArchivo = "Puntaje.txt";
         vec = new Vector();
         iVidas = 5;
         iScore = 0;
-        iFrameActual = 0;
         iTeclaActual = 0;
-        bFinJuego = false;
         // Define la imagen del jugador principal
         URL urlJugador = this.getClass().getResource("sJugador.gif");
 
@@ -79,14 +75,11 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         System.out.println(basJugador.getX());
         System.out.println("Y: ");
         System.out.println(basJugador.getY());
-        // Carga la animación del personaje malo
-        cargarImaMalo();
-
         /* Crea un número de personajes malos y buenos; y los almacena en
          * sus respectivos arreglos */
 
         // Genera de 8 a 10 malos de forma aleatoria
-        crearMalos((int)(Math.random() * 3) + 8);
+        cargarMalos((int)(Math.random() * 3) + 8);
 
         // Genera de 10 a 13 buenos de forma aleatoria
         crearBuenos((int)(Math.random() * 4) + 10);
@@ -110,26 +103,30 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     
     
     /**
-     * cargarImaMalo
+     * cargarMalos
      *
      * Método que carga las imágenes individuales que componen la animación
      * del asteroide
      *
      */
    
-    private void cargarImaMalo() {
-        arrImaMalo = new Image[iMALOFRAMES];
+    private void cargarMalos(int iCant) {
         String sNomArchivo;
-        for (int i = 0; i < iMALOFRAMES; i++){
+        Image imaCuadro;
+        ArrayList<CuadroDeAnimacion> arrCuadros = new ArrayList<>();
+        for (int i = 0; i < 31; i++){
             // Modificar el nombre de archivo de acuerdo al contador
             sNomArchivo = "sMalo/crop_as-" + i + ".png";
             URL urlImagen = this.getClass().getResource(sNomArchivo);
+
             // Obtener la imagen a partir del url y encogerla
-            arrImaMalo[i] = Toolkit
+            imaCuadro = Toolkit
                     .getDefaultToolkit()
                     .getImage(urlImagen)
-                    .getScaledInstance(80,80, Image.SCALE_SMOOTH);
+                    .getScaledInstance(50,50, Image.SCALE_SMOOTH);
+            arrCuadros.add(new CuadroDeAnimacion(imaCuadro, 50));
         }
+        crearMalos(iCant, arrCuadros);
     }
 
 
@@ -144,7 +141,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      *
      */
 
-    private void crearMalos(int iCantidad) {
+    private void crearMalos(int iCantidad, ArrayList<CuadroDeAnimacion> arrCuadros) {
         arrMalos = new ArrayList<>();
         for (int i = 0; i < iCantidad; i++) {
             //Genera una posición aleatoria fuera del applet por la derecha
@@ -152,7 +149,11 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
             int iPosY = getYRandom();
 
             // Agregar un objeto nuevo de personaje con velocidad de 3 o 5
-            arrMalos.add(new Personaje(iPosX, iPosY, arrImaMalo[iFrameActual], 3, 5));
+            arrMalos.add(new Personaje(iPosX,
+                                       iPosY,
+                                       new Animacion(arrCuadros),
+                                       3,
+                                       5));
         }
     }
 
@@ -171,7 +172,9 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         arrBuenos = new ArrayList<>();
 
         URL urlImaBueno = this.getClass().getResource("sCookie.png");
-        Image imaBueno = Toolkit.getDefaultToolkit().getImage(urlImaBueno);
+        Image imaBueno = Toolkit.getDefaultToolkit()
+                                .getImage(urlImaBueno)
+                                .getScaledInstance(50,50, Image.SCALE_SMOOTH);
 
         for (int i = 0; i < iCantidad; i++) {
             // Genera una posición aleatoria fuera del applet por la izquierda
@@ -327,17 +330,17 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     }
 
     private void animarMalos() {
-        // Cambiar de frame para animar a los personajes malos
+        // Calcula el tiempo transcurrido desde la iteracion previa
+        long tiempoTranscurrido =
+                System.currentTimeMillis() - lTiempoActual;
+        lTiempoActual += tiempoTranscurrido;
+
         for(Personaje perMalo : arrMalos){
-            if(iFrameActual < iMALOFRAMES){
-                perMalo.setImagen(arrImaMalo[iFrameActual]);
-                iFrameActual++;
-            }
-            else{
-                iFrameActual = 0;
-            }
+            // Actualiza los cuadros en la animacion
+            perMalo.getAnimacion().actualiza(tiempoTranscurrido);
         }
     }
+
 
     /**
      * checaColision
@@ -467,7 +470,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      */
     public void paint1(Graphics graDibujo) {
         // si la imagen ya se cargo
-        if (basJugador != null && imaImagenFondo != null && !bFinJuego) {
+        if (basJugador != null && imaImagenFondo != null) {
             if(iVidas > 0) {
                 // Dibuja la imagen de fondo
                 graDibujo.drawImage(imaImagenFondo,
