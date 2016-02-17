@@ -96,15 +96,16 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         URL urlGameOver = this.getClass().getResource("gameOver.png");
         imaGameOver = Toolkit.getDefaultToolkit().getImage(urlGameOver);
 
+        // Carga los sonidos de colisiones
+        cargarSonidos();
+        addKeyListener(this);
+
     }
     
     public PrimerExamen() {
         init();
         Thread th = new Thread(this);
         th.start();
-        // Carga los sonidos de colisiones
-        cargarSonidos();
-        addKeyListener(this);
     }
     
     
@@ -525,42 +526,40 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
             fileIn = new BufferedReader(new FileReader(sNombreArchivo));
         }
         String sDato = fileIn.readLine();
-        while (sDato != null){
-            int num = (Integer.parseInt(sDato));
-            iVidas = num;
-            
+        int num = (Integer.parseInt(sDato));
+        iVidas = num;
+
+        sDato = fileIn.readLine();
+        num = (Integer.parseInt(sDato));
+        iScore = num;
+        sDato = fileIn.readLine();
+        num = (Integer.parseInt(sDato));
+        iCantidadMalos = num;
+        for (int iC = 0; iC < iCantidadMalos;++iC){
             sDato = fileIn.readLine();
             num = (Integer.parseInt(sDato));
-            iScore = num;
+            arrMalos.get(iC).setX(num);
             sDato = fileIn.readLine();
             num = (Integer.parseInt(sDato));
-            iCantidadMalos = num;
-            for (int iC = 0; iC < iCantidadMalos;++iC){
-                sDato = fileIn.readLine();
-                num = (Integer.parseInt(sDato));
-                arrMalos.get(iC).setX(num);
-                sDato = fileIn.readLine();
-                num = (Integer.parseInt(sDato));
-                arrMalos.get(iC).setY(num);
-            }
-            sDato = fileIn.readLine();
-            num = (Integer.parseInt(sDato));
-            iCantidadBuenos = num;
-            for (int iC = 0; iC < iCantidadBuenos;++iC){
-                sDato = fileIn.readLine();
-                num = (Integer.parseInt(sDato));
-                arrBuenos.get(iC).setX(num);
-                sDato = fileIn.readLine();
-                num = (Integer.parseInt(sDato));
-                arrBuenos.get(iC).setY(num);
-            }
-            sDato = fileIn.readLine();
-            num = (Integer.parseInt(sDato));
-            basJugador.setX(num);
-            sDato = fileIn.readLine();
-            num = (Integer.parseInt(sDato));
-            basJugador.setY(num);
+            arrMalos.get(iC).setY(num);
         }
+        sDato = fileIn.readLine();
+        num = (Integer.parseInt(sDato));
+        iCantidadBuenos = num;
+        for (int iC = 0; iC < iCantidadBuenos;++iC){
+            sDato = fileIn.readLine();
+            num = (Integer.parseInt(sDato));
+            arrBuenos.get(iC).setX(num);
+            sDato = fileIn.readLine();
+            num = (Integer.parseInt(sDato));
+            arrBuenos.get(iC).setY(num);
+        }
+        sDato = fileIn.readLine();
+        num = (Integer.parseInt(sDato));
+        basJugador.setX(num);
+        sDato = fileIn.readLine();
+        num = (Integer.parseInt(sDato));
+        basJugador.setY(num);
         fileIn.close();
     }
     
