@@ -255,6 +255,7 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
                                            iexError.toString());
             }
         }
+
     }
 
     /**
@@ -379,7 +380,6 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
                                     perMalo.getAlto());
             if(recJugador.intersects(recMalo)){
                 iContGolpe++;
-                sMalo.play();
                 reposicionarMalo(perMalo);
             }
 
