@@ -35,8 +35,6 @@ public class Base {
      * 
      * @param iX es la <code>posicion en x</code> del objeto.
      * @param iY es la <code>posicion en y</code> del objeto.
-     * @param iAncho es el <code>ancho</code> del objeto.
-     * @param iAlto es el <code>Largo</code> del objeto.
      * @param imaImagen es la <code>imagen</code> del objeto.
      * 
      */
@@ -46,9 +44,9 @@ public class Base {
         this.iVelX = iVX;
         this.iVelY = iVY;
         this.imaImagen = imaImagen;
-        this.imiImagen = new ImageIcon(imaImagen);
-        this.iAncho = this.imiImagen.getIconWidth();
-        this.iAlto = this.imiImagen.getIconHeight();
+        ImageIcon imiImagen = new ImageIcon(imaImagen);
+        this.iAncho = imiImagen.getIconWidth();
+        this.iAlto = imiImagen.getIconHeight();
     }
 
     public Base(int iX, int iY,  Image imaImagen) {
@@ -57,9 +55,21 @@ public class Base {
         this.iVelX = 0;
         this.iVelY = 0;
         this.imaImagen = imaImagen;
-        this.imiImagen = new ImageIcon(imaImagen);
-        this.iAncho = this.imiImagen.getIconWidth();
-        this.iAlto = this.imiImagen.getIconHeight();
+        ImageIcon imiImagen = new ImageIcon(imaImagen);
+        this.iAncho = imiImagen.getIconWidth();
+        this.iAlto = imiImagen.getIconHeight();
+    }
+
+    public Base(int iX, int iY,  Animacion anim) {
+        this.iX = iX;
+        this.iY = iY;
+        this.iVelX = 0;
+        this.iVelY = 0;
+        this.imaImagen = anim.getImagen();
+        ImageIcon imiImagen = new ImageIcon(anim.getImagen());
+        this.iAncho = imiImagen.getIconWidth();
+        this.iAlto = imiImagen.getIconHeight();
+        aniPrincipal = anim;
     }
 
     
@@ -138,9 +148,9 @@ public class Base {
      */
     public void setImagen(Image imaImagen) {
         this.imaImagen = imaImagen;
-        this.imiImagen = new ImageIcon(imaImagen);
-        this.iAncho = this.imiImagen.getIconWidth();
-        this.iAlto = this.imiImagen.getIconHeight();
+        ImageIcon imiImagen = new ImageIcon(imaImagen);
+        this.iAncho = imiImagen.getIconWidth();
+        this.iAlto = imiImagen.getIconHeight();
     }
 
     /**
@@ -152,6 +162,9 @@ public class Base {
      * 
      */
     public Image getImagen() {
+        if(aniPrincipal != null){
+            return aniPrincipal.getImagen();
+        }
         return imaImagen;
     }
 
@@ -219,6 +232,18 @@ public class Base {
             // se regresa un falso porque el objeto recibido no es tipo Base
             return false;
         }
+    }
+
+    /**
+     * getAnimacion
+     *
+     * Metodo de acceso que regresa la animacion del objeto
+     *
+     * @return la animacion del objeto.
+     *
+     */
+    public Animacion getAnimacion() {
+        return aniPrincipal;
     }
 
     /**

@@ -1,5 +1,3 @@
-package primerexamen;
-
 /**
  * Personaje
  *
@@ -11,11 +9,13 @@ package primerexamen;
  * @date 99/XXX/99
  */
 
+package primerexamen;
+
 import java.awt.*;
 
 public class Personaje extends Base {
-    private int iVelA;
-    private int iVelB;
+    private int iLowerbound;
+    private int iUpperbound;
 
     /**
      * Personaje

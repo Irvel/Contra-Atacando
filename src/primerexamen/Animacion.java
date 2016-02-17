@@ -1,3 +1,5 @@
+package primerexamen;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -55,9 +57,6 @@ public class Animacion{
 	public synchronized void actualiza(long tiempoTranscurrido){
 		if (arrCuadros.size() > 1){
 			iDuracionAnimacion += tiempoTranscurrido;
-			
-
-			
 			if (iDuracionAnimacion > getCuadro(iCuadroActual).tiempoFinal){
 				if(iCuadroActual == arrCuadros.size() - 1){
                     iCuadroActual = 0;
@@ -82,6 +81,8 @@ public class Animacion{
 			return getCuadro(iCuadroActual).getImagen();
 		}
 	}
+
+
 	
 	private CuadroDeAnimacion getCuadro(int i){
 		return arrCuadros.get(i);
