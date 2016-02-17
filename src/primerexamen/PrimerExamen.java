@@ -179,6 +179,7 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
         sMalo = getAudioClip (urlColision2);
     }
 
+
     /**
      * getXRandom
      *
@@ -189,6 +190,7 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
     private int getXRandom(){
         return (int)(Math.random() * (getWidth()));
     }
+
 
     /**
      * getYRandom
@@ -238,9 +240,11 @@ public class PrimerExamen extends Applet implements Runnable, KeyListener {
            se checa si hubo colisiones para desaparecer jugadores o corregir
            movimientos y se vuelve a pintar todo
         */
-        while (true && iVidas > 0) {
-            actualiza();
-            checaColision();
+        while (true) {
+            if(iVidas > 0){
+                actualiza();
+                checaColision();
+            }
             repaint();
             try	{
                 // El hilo del juego se duerme.
