@@ -229,7 +229,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      *
      */
     private int getYRandom(){
-        int iYRandom = (int)(Math.random() * (600));
+        int iYRandom = (int)(Math.random() * (551) + 50);
         // Evitar que llegue a aparecer debajo del eje Y
         iYRandom = iYRandom > 600 - 100 ? 600 - 100 : iYRandom;
         return iYRandom;
@@ -496,7 +496,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                     perBueno.paint(graDibujo, this);
                 }
                 graDibujo.drawString("Score: " + iScore + "   Vidas:" + iVidas,
-                                     20, 20);
+                                     50, 50);
             }
             else{
                 graDibujo.drawImage(imaGameOver,
@@ -528,25 +528,37 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         String sDato = fileIn.readLine();
         int num = (Integer.parseInt(sDato));
         iVidas = num;
+        leerPersonajesArchivo(fileIn);
+        fileIn.close();
+    }
 
+    private void leerPersonajesArchivo(BufferedReader fileIn) throws
+                                                              IOException {
+        String sDato;
+        int num;
         sDato = fileIn.readLine();
         num = (Integer.parseInt(sDato));
         iScore = num;
         sDato = fileIn.readLine();
         num = (Integer.parseInt(sDato));
         iCantidadMalos = num;
-        for (int iC = 0; iC < iCantidadMalos;++iC){
-            sDato = fileIn.readLine();
-            num = (Integer.parseInt(sDato));
-            arrMalos.get(iC).setX(num);
-            sDato = fileIn.readLine();
-            num = (Integer.parseInt(sDato));
-            arrMalos.get(iC).setY(num);
-        }
+        leeMalosArchivo(fileIn);
         sDato = fileIn.readLine();
         num = (Integer.parseInt(sDato));
         iCantidadBuenos = num;
-        for (int iC = 0; iC < iCantidadBuenos;++iC){
+        leerBuenosArchivo(fileIn);
+        sDato = fileIn.readLine();
+        num = (Integer.parseInt(sDato));
+        basJugador.setX(num);
+        sDato = fileIn.readLine();
+        num = (Integer.parseInt(sDato));
+        basJugador.setY(num);
+    }
+
+    private void leerBuenosArchivo(BufferedReader fileIn) throws IOException {
+        String sDato;
+        int num;
+        for (int iC = 0; iC < iCantidadBuenos; ++iC){
             sDato = fileIn.readLine();
             num = (Integer.parseInt(sDato));
             arrBuenos.get(iC).setX(num);
@@ -554,15 +566,21 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
             num = (Integer.parseInt(sDato));
             arrBuenos.get(iC).setY(num);
         }
-        sDato = fileIn.readLine();
-        num = (Integer.parseInt(sDato));
-        basJugador.setX(num);
-        sDato = fileIn.readLine();
-        num = (Integer.parseInt(sDato));
-        basJugador.setY(num);
-        fileIn.close();
     }
-    
+
+    private void leeMalosArchivo(BufferedReader fileIn) throws IOException {
+        String sDato;
+        int num;
+        for (int iC = 0; iC < iCantidadMalos; ++iC){
+            sDato = fileIn.readLine();
+            num = (Integer.parseInt(sDato));
+            arrMalos.get(iC).setX(num);
+            sDato = fileIn.readLine();
+            num = (Integer.parseInt(sDato));
+            arrMalos.get(iC).setY(num);
+        }
+    }
+
     public void grabaArchivo() throws IOException{
         PrintWriter fileOut = new PrintWriter(new FileWriter(sNombreArchivo));
         fileOut.println(iVidas);
