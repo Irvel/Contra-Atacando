@@ -36,11 +36,12 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     private Graphics graGraficaApplet;   // Objeto grafico de la Imagen
     private SoundClip sBueno;            // Sonido colision con un bueno
     private SoundClip sMalo;             // Sonido colision con un malo
-    private static final int iWidth = 800;
-    private static final int iHeight = 600;
+    private static final int IWIDTH = 800;
+    private static final int IHEIGHT = 600;
     private String sNombreArchivo;       // Nombre del archivo
     private Vector vec;                  // Vector para agregar el puntaje
     private String[] arr;                // Arreglo del archivo divido.
+
 
 
     /**
@@ -52,7 +53,11 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      *
      */
 
-    public PrimerExamen() {
+     /*
+     *Constructor default
+     */
+    
+    public void init(){
         sNombreArchivo = "Puntaje.txt";
         vec = new Vector();
         iVidas = 5;
@@ -66,15 +71,13 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         int iMitadY = (600 / 2) - (121 / 2);
 
         // Crea el objeto del jugador principal en el centro del mapa
+        
         basJugador = new Base(iMitadX,
                               iMitadY,
                               10,
                               10,
                               Toolkit.getDefaultToolkit().getImage(urlJugador));
-        System.out.println("X: ");
-        System.out.println(basJugador.getX());
-        System.out.println("Y: ");
-        System.out.println(basJugador.getY());
+
         /* Crea un número de personajes malos y buenos; y los almacena en
          * sus respectivos arreglos */
 
@@ -92,10 +95,12 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         URL urlGameOver = this.getClass().getResource("gameOver.png");
         imaGameOver = Toolkit.getDefaultToolkit().getImage(urlGameOver);
 
-
+    }
+    
+    public PrimerExamen() {
+        init();
         Thread th = new Thread(this);
         th.start();
-
         // Carga los sonidos de colisiones
         cargarSonidos();
         addKeyListener(this);
@@ -481,6 +486,8 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                                     this);
                 //Dibuja los objetos principales del Applet
                 basJugador.paint(graDibujo, this);
+                System.out.println(basJugador.getX());
+                System.out.println(basJugador.getY());
                 for (Personaje perMalo : arrMalos) {
                     perMalo.paint(graDibujo, this);
                 }
@@ -530,11 +537,8 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     
     public void grabaArchivo() throws IOException{
         PrintWriter fileOut = new PrintWriter(new FileWriter(sNombreArchivo));
-        for (int i = 0; i <vec.size();++i){
-            int iX;
-            iX = (int) vec.get(i);
-            fileOut.println("TEST");
-        }
+        fileOut.println(iVidas);
+        fileOut.println(iScore);
         fileOut.close();
     }
 
@@ -548,10 +552,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         iTeclaActual = key.getKeyCode();
         if (iTeclaActual == KeyEvent.VK_G){
             try{
-            //leeArchivo();
-            System.out.println("Enters");
-            vec.add(iScore);
-            grabaArchivo();
+                grabaArchivo();
             }catch(IOException e){
                 
             }
@@ -572,7 +573,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     
     public static void main(String [] args){
         PrimerExamen hola = new PrimerExamen();
-        hola.setSize(iWidth,iHeight);
+        hola.setSize(IWIDTH,IHEIGHT);
         hola.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         hola.setVisible(true);
     }
