@@ -1,9 +1,9 @@
 package primerexamen;
 
 /**
- * Base
+ * Personaje
  *
- * Modela la definición de todos los objetos de tipo
+ * Modela la definición de los personajes derivados de Base
  * <code>Base</code>
  *
  * @author XXXXXXX
@@ -14,7 +14,6 @@ package primerexamen;
 import java.awt.*;
 
 public class Personaje extends Base {
-    private boolean bAdentro;
     private int iVelA;
     private int iVelB;
 
@@ -33,12 +32,12 @@ public class Personaje extends Base {
      */
     public Personaje(int iX, int iY,  Image imaImagen, int iVelA, int iVelB) {
         super(iX, iY, imaImagen);
-        this.bAdentro = false;
         this.iVelA = iVelA;
         this.iVelB = iVelB;
     }
 
     public int getVel(){
+        // Elige al azar la velocidad A o la velocidad B
         if((int)(Math.random() * 2) == 0)
             return this.iVelA;
         else
