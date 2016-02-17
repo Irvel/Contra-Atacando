@@ -108,6 +108,14 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         addKeyListener(this);
     }
 
+    /**
+     * cargarJugador()
+     *
+     * Método carga la imagen del jugador de disco, inicializa su posición en
+     * el centro del JFrame y crea el objeto <code>Base</code> del jugado.
+     *
+     */
+
     private void cargarJugador() {
         // Define la imagen del jugador principal
         URL urlJugador = this.getClass().getResource("sJugador.gif");
@@ -124,6 +132,14 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                               Toolkit.getDefaultToolkit().getImage(urlJugador));
     }
 
+    /**
+     * PrimerExamen()
+     *
+     * Método constructor del JFrame PrimerExamen que manda inicializar las
+     * variables miembro y crea el <code>Thread</code> principal del Juego.
+     *
+     */
+
     public PrimerExamen() {
         init();
         Thread th = new Thread(this);
@@ -132,7 +148,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     
     
     /**
-     * cargarMalos
+     * cargarMalos()
      *
      * Método que carga las imágenes individuales que componen la animación
      * del asteroide
@@ -160,13 +176,15 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
 
     /**
-     * crearMalos
+     * crearMalos()
      *
      * Método que crea una cantidad pre-determinada de personajes malos con
      * coordenadas aleatorias fuera del applet de la parte derecha. Utiliza
      * las imagenes ya cargadas de los en arrImaMalo
      *
      * @param iCantidad es el <code>número</code> de objetos malos a crear.
+     * @param arrCuadros es un <code>ArrayList</code> de CuadroDeAnimación
+     *                   para crear la animación de cada personaje.
      *
      */
 
@@ -188,7 +206,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
 
     /**
-     * crearBuenos
+     * crearBuenos()
      *
      * Método que carga la imagen de los personajes buenos y genera una
      * cantidad pre-determinada de personajes buenos con coordenadas
@@ -217,7 +235,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
 
     /**
-     * cargarSonidos
+     * cargarSonidos()
      *
      * Método que carga los sonidos de las colisiones con el bueno y con el malo
      *
