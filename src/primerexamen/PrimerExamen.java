@@ -1,28 +1,28 @@
 /*
+ *
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2016 Irvel Nduva, Jorge Vazquez
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 
-The MIT License (MIT)
-
-Copyright (c) 2016 Irvel Nduva, Jorge Vazquez
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-*/
 package primerexamen;
 
 import javax.swing.*;
@@ -49,7 +49,6 @@ import java.util.ArrayList;
  * @date 17/02/2016
  */
 
-
 public class PrimerExamen extends JFrame implements Runnable, KeyListener {
   
     private Base basJugador;                // El objeto del jugador
@@ -74,6 +73,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     private static final int IHEIGHT = 600;   // El alto del JFrame
     private String sNombreArchivo;            // Nombre del archivo
 
+
     /**
      * init()
      *
@@ -81,7 +81,6 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      * También crea los objetos a ser utilizados en el <code>JFrame</code>.
      *
      */
-
     public void init(){
         sNombreArchivo = "Puntaje.txt";
         iVidas = 5;
@@ -110,6 +109,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         addKeyListener(this);
     }
 
+
     /**
      * cargarJugador()
      *
@@ -117,7 +117,6 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      * el centro del JFrame y crea el objeto <code>Base</code> del jugado.
      *
      */
-
     private void cargarJugador() {
         // Define la imagen del jugador principal
         URL urlJugador = this.getClass().getResource("sJugador.gif");
@@ -134,6 +133,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                               Toolkit.getDefaultToolkit().getImage(urlJugador));
     }
 
+
     /**
      * PrimerExamen()
      *
@@ -141,7 +141,6 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      * variables miembro y crea el <code>Thread</code> principal del Juego.
      *
      */
-
     public PrimerExamen() {
         init();
         Thread th = new Thread(this);
@@ -156,7 +155,6 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      * del asteroide
      *
      */
-   
     private void cargarMalos(int iCant) {
         String sNomArchivo;
         Image imaCuadro;
@@ -189,7 +187,6 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      *                   para crear la animación de cada personaje.
      *
      */
-
     private void crearMalos(int iCantidad, ArrayList<CuadroDeAnimacion> arrCuadros) {
         arrMalos = new ArrayList<>();
         for (int i = 0; i < iCantidad; i++) {
@@ -242,20 +239,17 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      * Método que carga los sonidos de las colisiones con el bueno y con el malo
      *
      */
-    
     private void cargarSonidos() {
-        URL urlColision1 = this.getClass().getResource("aPuntosGanados.wav");
-        URL urlColision2 = this.getClass().getResource("aVidaPerdida.wav");
         sBueno = new SoundClip("aPuntosGanados.wav");
         sMalo = new SoundClip("aVidaPerdida.wav");
     }
 
 
     /**
-     * getXRandom
+     * getXRandom()
      *
      * Método que regresa una coordenada aleatoria para el eje X que se
-     * encuentra dentro del applet actual.
+     * encuentra dentro del JFrame.
      *
      */
     private int getXRandom(){
@@ -264,10 +258,10 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
 
     /**
-     * getYRandom
+     * getYRandom()
      *
      * Método que regresa una coordenada aleatoria para el eje Y que se
-     * encuentra dentro del applet actual.
+     * encuentra dentro del JFrame.
      *
      */
     private int getYRandom(){
@@ -281,14 +275,13 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
 
     /**
-     * run
+     * run()
      *
      * Metodo sobrescrito de la clase <code>Thread</code>.<P>
      * En este metodo se ejecuta el hilo, que contendrá las instrucciones
-     * de nuestro juego.
+     * del juego.
      *
      */
-    
     @Override
     public void run () {
         /* mientras dure el juego, se actualizan posiciones de jugadores
@@ -298,7 +291,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         while (true) {
             if(iVidas > 0){
                 actualiza();
-                checaColision();
+                checarColision();
             }
             repaint();
             try	{
@@ -314,13 +307,59 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
 
     /**
-     * actualiza
+     * actualiza()
      *
      * Metodo que actualiza la posicion de los objetos
      *
      */
     public void actualiza(){
-        // Mueve el jugador principal si es que se presionó una tecla
+        mueveJugador();     // Mueve el jugador si es que se presionó una tecla
+        guardaOCarga();     // Carga un juego previo o almacena el juego actual
+        iTeclaActual = 0;   // Reestablece la útima tecla presionada a ninguna
+        muevePersonajes();  // Mueve a los personajes buenos y malos
+        animaMalos();       // Actualiza la animacion de cada malo
+        checaVidas();       // Resta vidas de acuerdo al valor de iContGolpe
+    }
+
+
+    /**
+     * guardaOCarga()
+     *
+     * Metodo que manda a llamar la función para grabar al archivo los
+     * ajustes o leer del archivo los ajustes dependiendo de la última tecla
+     * presionada.
+     *
+     */
+    private void guardaOCarga() {
+        switch(iTeclaActual) {
+            case KeyEvent.VK_G:
+                try{
+                    grabaArchivo();
+                }
+                catch(IOException e){
+
+                }
+                break;
+            case KeyEvent.VK_C:
+                try{
+                    leeArchivo();
+                }
+                catch(IOException e){
+
+                }
+                break;
+        }
+    }
+
+
+    /**
+     * mueveJugador()
+     *
+     * Metodo actualiza la posición del Jugador principal de acuerdo a la
+     * última tecla presionada.
+     *
+     */
+    private void mueveJugador() {
         switch(iTeclaActual) {
             case KeyEvent.VK_Q:
                 basJugador.setX(basJugador.getX() - basJugador.getVelX());
@@ -339,10 +378,18 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                 basJugador.setY(basJugador.getY() + basJugador.getVelY());
                 break;
         }
-        iTeclaActual = 0;  // Reestablecer la útima tecla presionada a ninguna
-        moverPersonajes();
-        animarMalos();
+    }
 
+
+    /**
+     * checaVidas()
+     *
+     * Metodo que decrementa las vidas si se ha llegado a una cantidad de
+     * golpes predeterminada. Al decrementarse una vida, se reproduce un
+     * sonido y se reestablece el contador de golpes.
+     *
+     */
+    private void checaVidas() {
         if(iContGolpe >= 5){
             iVidas--;
             sMalo.play();
@@ -351,7 +398,14 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     }
 
 
-    private void moverPersonajes() {
+    /**
+     * muevePersonajes()
+     *
+     * Metodo que actualiza la posicion de los personajes buenos y de
+     * los personajes malos.
+     *
+     */
+    private void muevePersonajes() {
         // Mueve a los personajes malos
         for(Personaje perMalo : arrMalos){
             perMalo.setX(perMalo.getX() - perMalo.getVel());
@@ -363,7 +417,14 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     }
 
 
-    private void animarMalos() {
+    /**
+     * animaMalos()
+     *
+     * Metodo que manda el tiempo transcurrido desde el último ciclo al
+     * método actualiza de cada personaje Malo para actualizar su cuadro actual.
+     *
+     */
+    private void animaMalos() {
         // Calcula el tiempo transcurrido desde la iteracion previa
         long tiempoTranscurrido =
                 System.currentTimeMillis() - lTiempoActual;
@@ -377,20 +438,20 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
 
     /**
-     * checaColision
+     * checarColision()
      *
      * Metodo usado para checar la colision entre objetos y la colision
      * de los objetos con los límites de la pantalla
      *
      */
-
-    public void checaColision(){
+    public void checarColision(){
         Rectangle recJugador = new Rectangle(basJugador.getX(),
                                              basJugador.getY(),
                                              basJugador.getAncho(),
                                              basJugador.getAlto());
-        checaColisionMalos(recJugador);
-        checaColisionBuenos(recJugador);
+        // Maneja las colisiones del jugador con los personajes
+        checarColisionMalos(recJugador);
+        checarColisionBuenos(recJugador);
 
         // Maneja las colisiones del jugador con los bordes del Applet
         if (basJugador.getY() >= getHeight() - basJugador.getAlto()) {
@@ -408,10 +469,17 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
     }
 
-    private void checaColisionBuenos(Rectangle recJugador) {
-        Rectangle recBueno;
 
-        // Revisar si el jugador está colisionando con un malo
+    /**
+     * checarColisionBuenos()
+     *
+     * Metodo usado para checar la colision entre el jugador y los personajes
+     * buenos.
+     *
+     */
+    private void checarColisionBuenos(Rectangle recJugador) {
+        Rectangle recBueno;
+        // Revisar si el jugador está colisionando con un bueno
         for(Personaje perBueno : arrBuenos){
             recBueno = new Rectangle(perBueno.getX(),
                                      perBueno.getY(),
@@ -420,17 +488,25 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
             if(recJugador.intersects(recBueno)){
                 iScore += 10;
                 sBueno.play();
-                reposicionarBueno(perBueno);
+                reposicionaBueno(perBueno);
             }
 
             // Revisar si el personaje llegó al la orilla del applet
             if(perBueno.getX() > getWidth()){
-                reposicionarBueno(perBueno);
+                reposicionaBueno(perBueno);
             }
         }
     }
 
-    private void checaColisionMalos(Rectangle recJugador) {
+
+    /**
+     * checarColisionMalos()
+     *
+     * Metodo usado para checar la colision entre el jugador y los personajes
+     * buenos.
+     *
+     */
+    private void checarColisionMalos(Rectangle recJugador) {
         Rectangle recMalo;
         // Revisar si el jugador está colisionando con un malo
         for(Personaje perMalo: arrMalos){
@@ -440,24 +516,40 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                                     perMalo.getAlto());
             if(recJugador.intersects(recMalo)){
                 iContGolpe++;
-                reposicionarMalo(perMalo);
+                reposicionaMalo(perMalo);
             }
 
             // Revisar si el personaje llegó al la orilla del applet
             if(perMalo.getX() < 0){
-                reposicionarMalo(perMalo);
+                reposicionaMalo(perMalo);
             }
         }
     }
 
-    private void reposicionarMalo(Personaje perMalo) {
+
+    /**
+     * reposicionaMalo()
+     *
+     * Metodo usado para reinicializar la posición de un malo fuera del
+     * applet por la derecha.
+     *
+     */
+    private void reposicionaMalo(Personaje perMalo) {
         int iPosX = getXRandom() + getWidth();
         int iPosY = getYRandom();
         perMalo.setX(iPosX);
         perMalo.setY(iPosY);
     }
 
-    private void reposicionarBueno(Personaje perBueno) {
+
+    /**
+     * reposicionaBueno()
+     *
+     * Metodo usado para reinicializar la posición de un malo fuera del
+     * applet por la izquierda.
+     *
+     */
+    private void reposicionaBueno(Personaje perBueno) {
         int iPosX = getXRandom() - getWidth();
         int iPosY = getYRandom();
         perBueno.setX(iPosX);
@@ -466,44 +558,43 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
 
     /**
-     * paint
+     * paint(Graphics graGrafico)
      *
-     * Metodo sobrescrito de la clase <code>Applet</code>,
-     * heredado de la clase Container.<P>
-     * En este metodo lo que hace es actualizar el contenedor y
-     * define cuando usar ahora el paint
+     * Metodo sobrescrito de la clase <code>JFrame</code>,heredado de la
+     * clase Container.
+     * Actualiza el contenedor y define cuando usar ahora el paint.
      *
      * @param graGrafico es el <code>objeto grafico</code> usado para dibujar.
      *
      */
-  
+    @Override
     public void paint (Graphics graGrafico){
-        // Inicializan el DoubleBuffer
+        // Inicializa el DoubleBuffer
         if (imaImagenApplet == null){
             imaImagenApplet = createImage (this.getSize().width,
                                            this.getSize().height);
             graGraficaApplet = imaImagenApplet.getGraphics ();
         }
-        // Actualiza graficos
-        paint1(graGraficaApplet);
+        // Dibuja los gráficos del juego sobre el JFrame
+        paintGame(graGraficaApplet);
+
         // Dibuja la imagen actualizada
         graGrafico.drawImage (imaImagenApplet, 0, 0, this);
     }
 
 
     /**
-     * paint1
+     * paintGame(Graphics graDibujo)
      *
-     * Metodo sobrescrito de la clase <code>Applet</code>,
-     * heredado de la clase Container.<P>
-     * En este metodo se dibuja la imagen con la posicion actualizada,
-     * ademas que cuando la imagen es cargada te despliega una advertencia.
+     * Método que dibuja todos los elementos del Juego en el JFrame
+     * incluyendo el fondo, el jugador principal, los personajes buenos y
+     * malos y el tablero de score y vidas.
      *
      * @param graDibujo es el objeto de <code>Graphics</code> usado para dibujar.
      *
      */
-    public void paint1(Graphics graDibujo) {
-        // Verificar que la imagen ya haya sido cargada
+    public void paintGame(Graphics graDibujo) {
+        // Verifica que la imagen ya haya sido cargada
         if (basJugador != null && imaImagenFondo != null) {
             if(iVidas > 0) {
                 // Dibuja la imagen de fondo
@@ -528,7 +619,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                                      50, 50);
             }
             else{
-                // Dibujar la imagen de GameOver cuando se acaben las vidas
+                // Dibuja la imagen de GameOver cuando se acaben las vidas
                 graDibujo.drawImage(imaGameOver,
                                     0,
                                     0,
@@ -538,106 +629,166 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
             }
         }
         else {
-            // Desplegar un mensaje mientras se carga el dibujo
+            // Despliega un mensaje mientras se carga el dibujo
             graDibujo.drawString("No se cargo la imagen..", 20, 20);
         }
     }
-    
+
+
+    /**
+     * leeArchivo()
+     *
+     * Método usado para leer un estado previo del juego y cargarlo en el
+     * juego actual.
+     *
+     */
     public void leeArchivo() throws IOException{
         BufferedReader fileIn;
         try{
             fileIn = new BufferedReader(new FileReader(sNombreArchivo));
-        }catch (FileNotFoundException e){
+        }
+        catch (FileNotFoundException e){
             File primerexamen = new File(sNombreArchivo);
             PrintWriter fileOut = new PrintWriter(primerexamen);
             fileOut.println("100,demo");
             fileOut.close();
             fileIn = new BufferedReader(new FileReader(sNombreArchivo));
         }
-        iVidas = (Integer.parseInt(fileIn.readLine()));
-        leerPersonajesArchivo(fileIn);
+        leePersonajesArchivo(fileIn);
         fileIn.close();
     }
 
-    private void leerPersonajesArchivo(BufferedReader fileIn) throws
+
+    /**
+     * leePersonajesArchivo()
+     *
+     * Método usado para leer los personajes de un estado previo del juego y
+     * cargarlo al juego actual. El estado previo lo lee de un archivo de
+     * texto recibido en un BufferedReader.
+     *
+     * @param fileIn es el <code>archivo</code> de texto a leer con el estado
+     *               previo del juego.
+     *
+     */
+    private void leePersonajesArchivo(BufferedReader fileIn) throws
                                                               IOException {
-        int num;
+        // Lee la cantidad de vidas y score pasado
+        iVidas = (Integer.parseInt(fileIn.readLine()));
         iScore = (Integer.parseInt(fileIn.readLine()));
+
+        // Lee la cantidad de personajes malos y posición de cada uno
         iCantidadMalos = (Integer.parseInt(fileIn.readLine()));
         leeMalosArchivo(fileIn);
+
+        // Lee la cantidad de personajes buenos y posición de cada uno
         iCantidadBuenos = (Integer.parseInt(fileIn.readLine()));
-        leerBuenosArchivo(fileIn);
-        num = (Integer.parseInt(fileIn.readLine()));
-        basJugador.setX(num);
-        num = (Integer.parseInt(fileIn.readLine()));
-        basJugador.setY(num);
+        leeBuenosArchivo(fileIn);
+
+        // Lee la posición previa del jugador
+        basJugador.setX(Integer.parseInt(fileIn.readLine()));
+        basJugador.setY(Integer.parseInt(fileIn.readLine()));
     }
 
-    private void leerBuenosArchivo(BufferedReader fileIn) throws IOException {
-        String sDato;
-        int num;
+
+    /**
+     * leeBuenosArchivo()
+     *
+     * Método usado para leer la posicion de cada uno de los personajes
+     * buenos de un estado previo y cargarlas al juego actual.
+     *
+     * @param fileIn es el <code>archivo</code> de texto a leer con el estado
+     *               previo del juego.
+     *
+     */
+    private void leeBuenosArchivo(BufferedReader fileIn) throws IOException {
+        // Lee las coordenadas X y Y de cada bueno de acuerdo a iCantidadBuenos
         for (int iC = 0; iC < iCantidadBuenos; ++iC){
-            sDato = fileIn.readLine();
-            num = (Integer.parseInt(sDato));
-            arrBuenos.get(iC).setX(num);
-            sDato = fileIn.readLine();
-            num = (Integer.parseInt(sDato));
-            arrBuenos.get(iC).setY(num);
+            arrBuenos.get(iC).setX(Integer.parseInt(fileIn.readLine()));
+            arrBuenos.get(iC).setY(Integer.parseInt(fileIn.readLine()));
         }
     }
 
+
+    /**
+     * leeMalosArchivo()
+     *
+     * Método usado para leer la posicion de cada uno de los personajes
+     * malos de un estado previo y cargarlas al juego actual.
+     *
+     * @param fileIn es el <code>archivo</code> de texto a leer con el estado
+     *               previo del juego.
+     *
+     */
     private void leeMalosArchivo(BufferedReader fileIn) throws IOException {
-        String sDato;
-        int num;
+        // Lee las coordenadas X y Y de cada malo de acuerdo a iCantidadMalos
         for (int iC = 0; iC < iCantidadMalos; ++iC){
-            sDato = fileIn.readLine();
-            num = (Integer.parseInt(sDato));
-            arrMalos.get(iC).setX(num);
-            sDato = fileIn.readLine();
-            num = (Integer.parseInt(sDato));
-            arrMalos.get(iC).setY(num);
+            arrMalos.get(iC).setX(Integer.parseInt(fileIn.readLine()));
+            arrMalos.get(iC).setY(Integer.parseInt(fileIn.readLine()));
         }
     }
 
+
+    /**
+     * grabaArchivo()
+     *
+     * Método usado para guardar la posicion de cada uno de los personajes
+     * buenos y malos del juego actual. También guarda el número de vidas,
+     * score y las coordenadas del jugador en el JFrame.
+     *
+     */
     public void grabaArchivo() throws IOException{
         PrintWriter fileOut = new PrintWriter(new FileWriter(sNombreArchivo));
+        // Guarda el número de vidas y score actuales
         fileOut.println(iVidas);
         fileOut.println(iScore);
+
+        // Guarda la cantidad de malos actuales y la posición de cada uno
         fileOut.println(iCantidadMalos);
         for (int iC = 0; iC < iCantidadMalos;++iC){
             fileOut.println(arrMalos.get(iC).getX());
             fileOut.println(arrMalos.get(iC).getY());
         }
+
+        // Guarda la cantidad de buenos actuales y la posición de cada uno
         fileOut.println(iCantidadBuenos);
         for (int iC = 0; iC < iCantidadBuenos;++iC){
             fileOut.println(arrBuenos.get(iC).getX());
             fileOut.println(arrBuenos.get(iC).getY());
         }
+
+        // Guarda las coordenadas actuales del jugador
         fileOut.println(basJugador.getX());
         fileOut.println(basJugador.getY());
         
         fileOut.close();
     }
 
-
     @Override
     public void keyTyped(KeyEvent e) {
     }
 
+    /**
+     * keyPressed()
+     *
+     * Metodo sobrescrito de la clase <code>KeyListener</code>. Almacena la
+     * última tecla presionada en iTeclaActual
+     *
+     */
     @Override
     public void keyPressed(KeyEvent key) {
         iTeclaActual = key.getKeyCode();
         if (iTeclaActual == KeyEvent.VK_G){
             try{
                 grabaArchivo();
-            }catch(IOException e){
-                
             }
-        }else if (iTeclaActual == KeyEvent.VK_C){
+            catch(IOException e){
+            }
+        }
+        else if (iTeclaActual == KeyEvent.VK_C){
             try{
                 leeArchivo();
-            }catch (IOException e){
-                
+            }
+            catch (IOException e){
             }
         }
     }
