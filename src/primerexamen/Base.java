@@ -48,6 +48,8 @@ public class Base {
      * 
      * @param iX es la <code>posicion en x</code> del objeto.
      * @param iY es la <code>posicion en y</code> del objeto.
+     * @param iVX es la <code>velocidad en x</code> del objeto.
+     * @param iVY es la <code>velocidad en y</code> del objeto.
      * @param imaImagen es la <code>imagen</code> del objeto.
      * 
      */
