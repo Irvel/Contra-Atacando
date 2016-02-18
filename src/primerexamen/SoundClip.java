@@ -12,10 +12,17 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.AudioSystem;
 import java.io.IOException;
 import java.net.URL;
+
 /**
+ * SoundClip
  *
- * @author JorgeVazquez
+ * Clase utilizada para almacenar y reproducir archivos de sonido
+ *
+ * @author Irvel
+ * @author Jorge
+ * @version 0.2
  */
+
 public class SoundClip {
     private AudioInputStream sample;
     private Clip clip;

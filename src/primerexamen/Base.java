@@ -43,8 +43,8 @@ public class Base {
     /**
      * Base
      * 
-     * Metodo constructor usado para crear el objeto animal
-     * creando el icono a partir de una imagen
+     * Metodo constructor usado para crear un objeto Base con imagen estática
+     * y velocidad predefinida.
      * 
      * @param iX es la <code>posicion en x</code> del objeto.
      * @param iY es la <code>posicion en y</code> del objeto.
