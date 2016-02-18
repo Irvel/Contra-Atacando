@@ -55,13 +55,13 @@ import java.util.ArrayList;
 
 public class PrimerExamen extends JFrame implements Runnable, KeyListener {
   
-    private Base basJugador;                // El objeto del jugador
-    private ArrayList<Personaje> arrMalos;  // Lista de personajes malos
-    private ArrayList<Personaje> arrBuenos; // Lista de personajes buenos
-    private Image imaImagenFondo;           // Para dibujar la imagen de fondo
-    private Image imaGameOver;              // Para dibujar la imagen final
-    private int iVidas;                     // El # de vidas del jugador
-    private int iScore;                     // El score del jugador
+    private Base basJugador;                 // El objeto del jugador
+    private ArrayList<Personaje> arrMalos;   // Lista de personajes malos
+    private ArrayList<Personaje> arrBuenos;  // Lista de personajes buenos
+    private Image imaImagenFondo;            // Para dibujar la imagen de fondo
+    private Image imaGameOver;               // Para dibujar la imagen final
+    private int iVidas;                      // El # de vidas del jugador
+    private int iScore;                      // El score del jugador
 
     // El numero de veces que le jugador ha golpeado un malo
     private int iContGolpe;
