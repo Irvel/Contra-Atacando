@@ -42,6 +42,10 @@ import java.util.ArrayList;
  * los asteroides que entran por el lado derecho y atrapar las galletas que
  * entran por el lado izquierdo; ambos de forma aleatoria.
  *
+ * Recursos utilizados:
+ * Low Poly Rocks por "para" (http://opengameart.org/content/low-poly-rocks)
+ * Platformer Art Complete Pack por "Kenney" (http://opengameart.org/content/platformer-art-complete-pack-often-updated)
+ * 63 Digital sound effects por "Kenney" (http://opengameart.org/content/63-digital-sound-effects-lasers-phasers-space-etc)
  *
  * @author Irvel
  * @author Jorge
