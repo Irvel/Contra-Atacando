@@ -28,28 +28,46 @@ package primerexamen;
 import java.awt.*;
 import java.util.ArrayList;
 
-/**
-	La clase Animacion maneja una serie de imágenes (arrCuadros)
-	y la cantidad de tiempo que se muestra cada cuadro.
-*/
 
+/**
+ * Animacion
+ *
+ * La clase Animacion maneja una serie de imágenes (arrCuadros)
+ * y la cantidad de tiempo que se muestra cada cuadro.
+ *
+ * @author Irvel
+ * @author Jorge
+ * @version 0.1
+ */
 public class Animacion{
-	
+
 	private ArrayList<CuadroDeAnimacion> arrCuadros;
 	private int iCuadroActual;
 	private long iDuracionAnimacion;
 	private long iDuracionTotal;
-	
-	/**
-		Crea una nueva Animacion vacía
-	*/
-	public Animacion(){
-        this.iDuracionTotal = 0;
-        iniciar();
-	}
+
 
     /**
-     Crea una nueva Animacion en base a un arraylist de cuadros recibido
+     * Animacion
+     *
+     * Metodo constructor usado para crear crear una nueva Animacion vacía
+     *
+     */
+	public Animacion(){
+        this.iDuracionTotal = 0;
+        inicia();
+	}
+
+
+    /**
+     * Animacion
+     *
+     * Metodo constructor usado para crear una nueva Animacion en base a un
+     * arreglo de cuadros. Después de crear, inicializa la animación.
+     *
+     * @param arrCuadros es el <code>Arraylist</code> de cuadros de tipo
+     *                   <code>CuadroDeAnimacion</code> para la animación.
+     *
      */
     public Animacion(ArrayList<CuadroDeAnimacion> arrCuadros){
         this.arrCuadros = arrCuadros;
@@ -57,28 +75,51 @@ public class Animacion{
         for (CuadroDeAnimacion cuaAct: arrCuadros) {
             iDuracionTotal += cuaAct.getTiempoFinal();
         }
-        iniciar();
+        inicia();
     }
-	
-	/**
-		Añade una cuadro a la animación con la duración
-		indicada (tiempo que se muestra la imagen).
-	*/	
+
+
+    /**
+     * sumaCuadro()
+     *
+     * Metodo que añade un cuadro adicional a la animación con la
+     * duración indicada (tiempo que se muestra la imagen).
+     *
+     * @param imagen es la imagen nueva de tipo <code>Image</code> que será
+     *               agregada a la animación.
+     * @param duracion es la cantidad de tiempo en milisegundos que la
+     *                 imagen a agregar será desplegada.
+     *
+     */
 	public synchronized void sumaCuadro(Image imagen, long duracion){
         iDuracionTotal += duracion;
 		arrCuadros.add(new CuadroDeAnimacion(imagen, iDuracionTotal));
 	}
-	
-	// Inicializa la animación desde el principio. 
-	public synchronized void iniciar(){
+
+
+    /**
+     * inicia()
+     *
+     * Metodo que inicializa la animación desde el primer cuadro.
+     *
+     */
+	public synchronized void inicia(){
 		iDuracionAnimacion = 0;
         iCuadroActual = 0;
 	}
-	
-	/**
-		Actualiza la imagen (cuadro) actual de la animación,
-		si es necesario.
-	*/
+
+
+    /**
+     * actualiza()
+     *
+     * Metodo que actualiza la imagen (cuadro) actual de la animación, si es
+     * necesario de acuerdo al tiempo transcurrido.
+     *
+     * @param tiempoTranscurrido es la cantidad de tiempo que ha transcurrido
+     *                           desde la última vez que se mandó llamar
+     *                           actualiza().
+     *
+     */
 	public synchronized void actualiza(long tiempoTranscurrido){
 		if (arrCuadros.size() > 1){
 			iDuracionAnimacion += tiempoTranscurrido;
@@ -94,10 +135,18 @@ public class Animacion{
 		}
 	}
 	
-	/**
-		Captura la imagen actual de la animación. Regeresa null
-		si la animación no tiene imágenes.
-	*/
+
+    /**
+     * getImagen()
+     *
+     * Metodo que captura la imagen actual de la animación. Regresa null
+     * si la animación no tiene imágenes.
+     *
+     * @return Regresa el cuadro actual en el que se encuentra la animacíon
+     *         En caso de que la animación no contenga imágenes, se regresa
+     *         null.
+     *
+     */
 	public synchronized Image getImagen(){
 		if (arrCuadros.size() == 0){
 			return null;
@@ -108,7 +157,17 @@ public class Animacion{
 	}
 
 
-	
+    /**
+     * getCuadro()
+     *
+     * Metodo que regresa un objeto de tipo <code>CuadroDeAnimacion</code>
+     * en la posición especificada.
+     *
+     *
+     * @param i es la posición en el arreglo de cuadros que se quiere accesar.
+     * @return el cuadro de animación en la posición i
+     *
+     */
 	private CuadroDeAnimacion getCuadro(int i){
 		return arrCuadros.get(i);
 	}
