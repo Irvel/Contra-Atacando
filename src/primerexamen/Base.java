@@ -121,134 +121,185 @@ public class Base {
     /**
      * setX
      * 
-     * Metodo modificador usado para cambiar la posicion en x del objeto
+     * Metodo modificador usado para cambiar la posicion en X del objeto
      * 
-     * @param iX es la <code>posicion en x</code> del objeto.
+     * @param iX es la <code>posicion en X</code> del objeto.
      * 
      */
     public void setX(int iX) {
         this.iX = iX;
     }
 
+
     /**
      * getX
      * 
-     * Metodo de acceso que regresa la posicion en x del objeto 
+     * Metodo de acceso que regresa la posicion en X del objeto
      * 
-     * @return iX es la <code>posicion en x</code> del objeto.
+     * @return iX es la <code>posicion en X</code> del objeto.
      * 
      */
     public int getX() {
             return iX;
     }
 
+
     /**
      * setY
      * 
-     * Metodo modificador usado para cambiar la posicion en y del objeto 
+     * Metodo modificador usado para cambiar la posicion en Y del objeto
      * 
-     * @param iY es la <code>posicion en y</code> del objeto.
+     * @param iY es la <code>posicion en Y</code> del objeto.
      * 
      */
     public void setY(int iY) {
             this.iY = iY;
     }
 
+
     /**
      * getY
      *
-     * Metodo de acceso que regresa la posicion en y del objeto
+     * Metodo de acceso que regresa la posicion en Y del objeto
      *
-     * @return posY es la <code>posicion en y</code> del objeto.
+     * @return posY es la <code>posicion en Y</code> del objeto.
      *
      */
     public int getY() {
         return iY;
     }
 
+
+    /**
+     * getVelX
+     *
+     * Metodo de acceso que regresa la velocidad en X del objeto
+     *
+     * @return iVelX es la <code>velocidad en X</code> del objeto.
+     *
+     */
     public int getVelX() {
         return iVelX;
     }
 
+
+    /**
+     * setVelX
+     *
+     * Metodo modificador usado para cambiar la velocidad en X del objeto
+     *
+     * @param iVelX es la <code>velocidad en X</code> a cambiar del objeto.
+     *
+     */
     public void setVelX(int iVelX) {
         this.iVelX = iVelX;
     }
 
+
+    /**
+     * getVelY
+     *
+     * Metodo de acceso que regresa la velocidad en Y del objeto
+     *
+     * @return iVelY es la <code>velocidad en Y</code> del objeto.
+     *
+     */
     public int getVelY() {
         return iVelY;
     }
 
+
+    /**
+     * setVelY
+     *
+     * Metodo modificador usado para cambiar la velocidad en Y del objeto
+     *
+     * @param iVelY es la <code>velocidad en Y</code> a cambiar del objeto.
+     *
+     */
     public void setVelY(int iVelY) {
         this.iVelY = iVelY;
     }
 
+
     /**
      * setImagen
      * 
-     * Metodo modificador usado para cambiar el icono de imagen del objeto
-     * tomandolo de un objeto imagen
+     * Metodo modificador usado para cambiar la imagen del objeto tomandolo
+     * de un objeto parámetro imagen
      * 
      * @param imaImagen es la <code>imagen</code> del objeto.
      * 
      */
     public void setImagen(Image imaImagen) {
         this.imaImagen = imaImagen;
+        // Extrae el ancho y alto de la nueva imagen para las variables miembro
         ImageIcon imiImagen = new ImageIcon(imaImagen);
-        this.iAncho = imiImagen.getIconWidth();
-        this.iAlto = imiImagen.getIconHeight();
+        this.iWidth = imiImagen.getIconWidth();
+        this.iHeight = imiImagen.getIconHeight();
     }
+
 
     /**
      * getImagen
      * 
-     * Metodo de acceso que regresa la imagen que representa el icono del objeto
-     * 
-     * @return la imagen a partide del <code>icono</code> del objeto.
+     * Metodo de acceso que regresa la imagen del objeto
+     *
+     * @return la imagen actual del objeto.
      * 
      */
     public Image getImagen() {
+        /* Si el objeto tiene una animación definida, utilizar la animación
+        para obtener la imagen actual del objeto*/
         if(aniPrincipal != null){
             return aniPrincipal.getImagen();
         }
         return imaImagen;
     }
 
-    /**
-     * getAncho
-     * 
-     * Metodo de acceso que regresa el ancho del icono 
-     * 
-     * @return un <code>entero</code> que es el ancho de la imagen.
-     * 
-     */
-    public int getAncho() {
-        return iAncho;
-    }
 
     /**
-     * getAlto
+     * getWidth
      * 
-     * Metodo que  da el alto del icono 
+     * Metodo de acceso que regresa el ancho del objeto
      * 
-     * @return un <code>entero</code> que es el alto de la imagen.
+     * @return iWidth, un <code>entero</code> que representa el ancho del
+     * objeto.
      * 
      */
-    public int getAlto() {
-        return iAlto;
+    public int getWidth() {
+        return iWidth;
     }
+
+
+    /**
+     * getHeight
+     *
+     * Metodo de acceso que regresa el ancho del objeto
+     *
+     * @return iHeight, un <code>entero</code> que representa el ancho del
+     * objeto.
+     *
+     */
+    public int getHeight() {
+        return iHeight;
+    }
+
     
     /**
      * paint
      * 
-     * Metodo para pintar el animal
-     * 
-     * @param graGrafico    objeto de la clase <code>Graphics</code> para graficar
-     * @param imoObserver  objeto de la clase <code>ImageObserver</code> es el 
-     *    Applet donde se pintara
+     * Metodo que dibuja la instancia del objeto actual en un gráfico de
+     * <code>Graphics</code> recibido.
+     *
+     * @param graGrafico objeto de la clase <code>Graphics</code> para graficar
+     * @param imoObserver objeto de la clase <code>ImageObserver</code>. Es el
+     *                    JFrame donde se pintara la instancia actual del
+     *                    objeto Base.
      * 
      */
     public void paint(Graphics graGrafico, ImageObserver imoObserver) {
-        graGrafico.drawImage(getImagen(), getX(), getY(), getAncho(), getAlto(), imoObserver);
+        graGrafico.drawImage(getImagen(), getX(), getY(), getWidth(), getHeight(), imoObserver);
     }
 
     /**
