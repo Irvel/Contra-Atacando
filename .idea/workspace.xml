@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0c96d236-ddd3-4d03-95a2-55bad3530679" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/JFrameGame/primerexamen/PrimerExamen.class" afterPath="$PROJECT_DIR$/out/production/JFrameGame/primerexamen/PrimerExamen.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/primerexamen/Base.java" afterPath="$PROJECT_DIR$/src/primerexamen/Base.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/primerexamen/PrimerExamen.java" afterPath="$PROJECT_DIR$/src/primerexamen/PrimerExamen.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/primerexamen/SoundClip.java" afterPath="$PROJECT_DIR$/src/primerexamen/SoundClip.java" />
     </list>
     <ignored path="JFrameGame.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,12 +29,12 @@
       <file leaf-file-name="PrimerExamen.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/primerexamen/PrimerExamen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33333334">
-              <caret line="126" column="39" selection-start-line="126" selection-start-column="39" selection-end-line="126" selection-end-column="39" />
+            <state vertical-scroll-proportion="0.3255814">
+              <caret line="43" column="2" selection-start-line="43" selection-start-column="2" selection-end-line="43" selection-end-column="2" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#9181#9182#0" expanded="true" />
-                <element signature="e#9235#9236#0" expanded="true" />
+                <element signature="e#9534#9535#0" expanded="true" />
+                <element signature="e#9588#9589#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -45,7 +44,7 @@
         <entry file="file://$PROJECT_DIR$/src/primerexamen/SoundClip.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+              <caret line="56" column="10" selection-start-line="56" selection-start-column="10" selection-end-line="56" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -55,8 +54,11 @@
         <entry file="file://$PROJECT_DIR$/src/primerexamen/Base.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+              <caret line="316" column="5" selection-start-line="316" selection-start-column="5" selection-end-line="316" selection-end-column="5" />
+              <folding>
+                <element signature="e#7458#7459#0" expanded="true" />
+                <element signature="e#7487#7488#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -77,7 +79,7 @@
         <entry file="file://$PROJECT_DIR$/src/primerexamen/Personaje.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="23" selection-end-column="3" />
+              <caret line="58" column="8" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="8" />
               <folding>
                 <element signature="e#0#2563#0" expanded="true" />
               </folding>
@@ -108,11 +110,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/primerexamen/Base.java" />
         <option value="$PROJECT_DIR$/src/primerexamen/Animacion.java" />
         <option value="$PROJECT_DIR$/src/primerexamen/Personaje.java" />
         <option value="$PROJECT_DIR$/src/primerexamen/CuadroDeAnimacion.java" />
         <option value="$PROJECT_DIR$/src/primerexamen/PrimerExamen.java" />
+        <option value="$PROJECT_DIR$/src/primerexamen/SoundClip.java" />
+        <option value="$PROJECT_DIR$/src/primerexamen/Base.java" />
       </list>
     </option>
   </component>
@@ -517,8 +520,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9181#9182#0" expanded="true" />
-            <element signature="e#9235#9236#0" expanded="true" />
+            <element signature="e#9534#9535#0" expanded="true" />
+            <element signature="e#9588#9589#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -535,7 +538,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="209" column="36" selection-start-line="209" selection-start-column="36" selection-end-line="209" selection-end-column="36" />
-          <folding />
+          <folding>
+            <element signature="e#7458#7459#0" expanded="true" />
+            <element signature="e#7487#7488#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -583,8 +589,8 @@
           <caret line="268" column="16" selection-start-line="268" selection-start-column="16" selection-end-line="268" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9181#9182#0" expanded="true" />
-            <element signature="e#9235#9236#0" expanded="true" />
+            <element signature="e#9534#9535#0" expanded="true" />
+            <element signature="e#9588#9589#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -601,7 +607,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="209" column="36" selection-start-line="209" selection-start-column="36" selection-end-line="209" selection-end-column="36" />
-          <folding />
+          <folding>
+            <element signature="e#7458#7459#0" expanded="true" />
+            <element signature="e#7487#7488#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -649,8 +658,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9181#9182#0" expanded="true" />
-            <element signature="e#9235#9236#0" expanded="true" />
+            <element signature="e#9534#9535#0" expanded="true" />
+            <element signature="e#9588#9589#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -667,7 +676,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="209" column="36" selection-start-line="209" selection-start-column="36" selection-end-line="209" selection-end-column="36" />
-          <folding />
+          <folding>
+            <element signature="e#7458#7459#0" expanded="true" />
+            <element signature="e#7487#7488#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -715,8 +727,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9181#9182#0" expanded="true" />
-            <element signature="e#9235#9236#0" expanded="true" />
+            <element signature="e#9534#9535#0" expanded="true" />
+            <element signature="e#9588#9589#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -737,8 +749,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9181#9182#0" expanded="true" />
-            <element signature="e#9235#9236#0" expanded="true" />
+            <element signature="e#9534#9535#0" expanded="true" />
+            <element signature="e#9588#9589#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -757,14 +769,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
           <caret line="541" column="0" selection-start-line="541" selection-start-column="0" selection-end-line="541" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/primerexamen/Base.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -789,16 +793,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/primerexamen/Personaje.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="23" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#2563#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/primerexamen/CuadroDeAnimacion.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -810,19 +804,40 @@
     <entry file="file://$PROJECT_DIR$/src/primerexamen/SoundClip.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <caret line="56" column="10" selection-start-line="56" selection-start-column="10" selection-end-line="56" selection-end-column="10" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/primerexamen/Personaje.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="58" column="8" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#2563#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/primerexamen/Base.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="316" column="5" selection-start-line="316" selection-start-column="5" selection-end-line="316" selection-end-column="5" />
+          <folding>
+            <element signature="e#7458#7459#0" expanded="true" />
+            <element signature="e#7487#7488#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/primerexamen/PrimerExamen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="126" column="39" selection-start-line="126" selection-start-column="39" selection-end-line="126" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.3255814">
+          <caret line="43" column="2" selection-start-line="43" selection-start-column="2" selection-end-line="43" selection-end-column="2" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9181#9182#0" expanded="true" />
-            <element signature="e#9235#9236#0" expanded="true" />
+            <element signature="e#9534#9535#0" expanded="true" />
+            <element signature="e#9588#9589#0" expanded="true" />
           </folding>
         </state>
       </provider>
