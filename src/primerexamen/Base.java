@@ -29,6 +29,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.ImageObserver;
 
+
+/**
+ * Base
+ *
+ * Clase modelo para un objeto gráfico que contiene información sobre su
+ * posición, velocidad e información gráfica. El objeto puede tener una
+ * imágen estática de la clase <code>Image</code> o una animación de la clase
+ * <code>Animacion</code>.
+ *
+ * @author Irvel
+ * @author Jorge
+ * @version 0.3
+ */
 public class Base {
 
     private int iX;                 // Posicion en x.
