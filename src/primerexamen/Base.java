@@ -35,10 +35,10 @@ public class Base {
     private int iY;                 // Posicion en y.
     private int iVelX;              // Velocidad en x
     private int iVelY;              // Velocidad en y
-    private int iAncho;             // Ancho del objeto
-    private int iAlto;              // Largo del objeto
-    private Image imaImagen;        // Imagen
-    private Animacion aniPrincipal; // La animación del objeto
+    private int iWidth;             // Ancho del objeto
+    private int iHeight;            // Alto del objeto
+    private Image imaImagen;        // Imagen actual del objeto
+    private Animacion aniPrincipal; // Animación del objeto
 
     /**
      * Base
@@ -56,32 +56,62 @@ public class Base {
         this.iY = iY;
         this.iVelX = iVX;
         this.iVelY = iVY;
+
+        // Extrae el ancho y alto de la imagen para las variables miembro
         this.imaImagen = imaImagen;
         ImageIcon imiImagen = new ImageIcon(imaImagen);
-        this.iAncho = imiImagen.getIconWidth();
-        this.iAlto = imiImagen.getIconHeight();
+        this.iWidth = imiImagen.getIconWidth();
+        this.iHeight = imiImagen.getIconHeight();
     }
 
+
+    /**
+     * Base
+     *
+     * Método constructor usado para crear un objeto Base con imagen estática
+     * y velocidad cero.
+     *
+     * @param iX es la <code>posicion en x</code> del objeto.
+     * @param iY es la <code>posicion en y</code> del objeto.
+     * @param imaImagen es la <code>imagen</code> del objeto.
+     *
+     */
     public Base(int iX, int iY,  Image imaImagen) {
         this.iX = iX;
         this.iY = iY;
         this.iVelX = 0;
         this.iVelY = 0;
+
+        // Extrae el ancho y alto de la imagen para las variables miembro
         this.imaImagen = imaImagen;
         ImageIcon imiImagen = new ImageIcon(imaImagen);
-        this.iAncho = imiImagen.getIconWidth();
-        this.iAlto = imiImagen.getIconHeight();
+        this.iWidth = imiImagen.getIconWidth();
+        this.iHeight = imiImagen.getIconHeight();
     }
 
+
+    /**
+     * Base
+     *
+     * Metodo constructor usado para crear un objeto Base con una animación
+     * de la clase <code>Animación</code> y velocidad cero.
+     *
+     * @param iX es la <code>posicion en x</code> del objeto.
+     * @param iY es la <code>posicion en y</code> del objeto.
+     * @param anim es la <code>Animacion</code> del objeto.
+     *
+     */
     public Base(int iX, int iY,  Animacion anim) {
         this.iX = iX;
         this.iY = iY;
         this.iVelX = 0;
         this.iVelY = 0;
         this.imaImagen = anim.getImagen();
+
+        // Extrae el ancho y alto de la animacion para las variables miembro
         ImageIcon imiImagen = new ImageIcon(anim.getImagen());
-        this.iAncho = imiImagen.getIconWidth();
-        this.iAlto = imiImagen.getIconHeight();
+        this.iWidth = imiImagen.getIconWidth();
+        this.iHeight = imiImagen.getIconHeight();
         aniPrincipal = anim;
     }
 

@@ -453,21 +453,21 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     public void checarColision(){
         Rectangle recJugador = new Rectangle(basJugador.getX(),
                                              basJugador.getY(),
-                                             basJugador.getAncho(),
-                                             basJugador.getAlto());
+                                             basJugador.getWidth(),
+                                             basJugador.getHeight());
         // Maneja las colisiones del jugador con los personajes
         checarColisionMalos(recJugador);
         checarColisionBuenos(recJugador);
 
         // Maneja las colisiones del jugador con los bordes del Applet
-        if (basJugador.getY() >= getHeight() - basJugador.getAlto()) {
-            basJugador.setY(getHeight() - basJugador.getAlto());
+        if (basJugador.getY() >= getHeight() - basJugador.getHeight()) {
+            basJugador.setY(getHeight() - basJugador.getHeight());
         }
         if (basJugador.getY() < 0) {
             basJugador.setY(0);
         }
-        if (basJugador.getX() >= getWidth() - basJugador.getAncho()) {
-            basJugador.setX(getWidth() - basJugador.getAncho());
+        if (basJugador.getX() >= getWidth() - basJugador.getWidth()) {
+            basJugador.setX(getWidth() - basJugador.getWidth());
         }
         if (basJugador.getX() < 0) {
             basJugador.setX(0);
@@ -489,8 +489,8 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         for(Personaje perBueno : arrBuenos){
             recBueno = new Rectangle(perBueno.getX(),
                                      perBueno.getY(),
-                                     perBueno.getAncho(),
-                                     perBueno.getAlto());
+                                     perBueno.getWidth(),
+                                     perBueno.getHeight());
             if(recJugador.intersects(recBueno)){
                 iScore += 10;
                 sBueno.play();
@@ -518,8 +518,8 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         for(Personaje perMalo: arrMalos){
             recMalo = new Rectangle(perMalo.getX(),
                                     perMalo.getY(),
-                                    perMalo.getAncho(),
-                                    perMalo.getAlto());
+                                    perMalo.getWidth(),
+                                    perMalo.getHeight());
             if(recJugador.intersects(recMalo)){
                 iContGolpe++;
                 reposicionaMalo(perMalo);
