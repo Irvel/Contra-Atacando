@@ -24,15 +24,15 @@ import java.net.URL;
  */
 
 public class SoundClip {
-    private AudioInputStream sample;
-    private Clip clip;
-    private boolean looping = false;
+    private AudioInputStream auiSample;
+    private Clip cClip;
+    private boolean bLooping = false;
     private int repeat = 0;
     private String filename = "";
     
     public SoundClip(){
         try{
-            clip = AudioSystem.getClip();
+            cClip = AudioSystem.getClip();
         }catch (LineUnavailableException e){
             System.out.println("Error en " + e.toString());
         }
@@ -41,8 +41,8 @@ public class SoundClip {
         this();
         load(filename);
     }
-    public void setLooping(boolean looping){
-        this.looping = looping;
+    public void setLooping(boolean bLooping){
+        this.bLooping = bLooping;
     }
     public void setRepeat(int repeat){
         this.repeat = repeat;
@@ -51,10 +51,10 @@ public class SoundClip {
         this.filename = filename;
     }
     public Clip getClip(){
-        return clip;
+        return cClip;
     }
-    public boolean getLooping(){
-        return looping;
+    public boolean isLooping(){
+        return bLooping;
     }
     public int getRepeat(){
         return repeat;
@@ -72,13 +72,13 @@ public class SoundClip {
         return url;
     }
     public boolean isLoaded(){
-        return (boolean)(sample != null);
+        return (boolean)(auiSample != null);
     }
     public boolean load(String audiofile){
         try{
             setFilename(audiofile);
-            sample = AudioSystem.getAudioInputStream(getURL(filename));
-            clip.open(sample);
+            auiSample = AudioSystem.getAudioInputStream(getURL(filename));
+            cClip.open(auiSample);
             return true;
         }catch (IOException e){
             System.out.println("Error en " + e.toString());
@@ -95,14 +95,14 @@ public class SoundClip {
     public void play(){
         if (!isLoaded())
             return;
-        clip.setFramePosition(0);
-        if (looping)
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        cClip.setFramePosition(0);
+        if (bLooping)
+            cClip.loop(Clip.LOOP_CONTINUOUSLY);
         else
-            clip.loop(repeat);
+            cClip.loop(repeat);
     }
     public void stop(){
-        clip.stop();
+        cClip.stop();
     }
     
 }

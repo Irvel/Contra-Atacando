@@ -302,56 +302,17 @@ public class Base {
         graGrafico.drawImage(getImagen(), getX(), getY(), getWidth(), getHeight(), imoObserver);
     }
 
-    /**
-     * equals
-     * 
-     * Metodo para checar igualdad con otro objeto
-     * 
-     * @param objObjeto    objeto de la clase <code>Object</code> para comparar
-     * @return un valor <code>boleano</code> que sera verdadero si el objeto
-     *   que invoca es igual al objeto recibido como parámetro
-     * 
-     */
-    public boolean equals(Object objObjeto) {
-        // si el objeto parametro es una instancia de la clase Base
-        if (objObjeto instanceof Base) {
-            // se regresa la comparación entre este objeto que invoca y el
-            // objeto recibido como parametro
-            Base basParam = (Base) objObjeto;
-            return this.getX() ==  basParam.getX() && 
-                    this.getY() == basParam.getY() &&
-                    this.getAncho() == basParam.getAncho() &&
-                    this.getAlto() == basParam.getAlto() &&
-                    this.getImagen() == basParam.getImagen();
-        }
-        else {
-            // se regresa un falso porque el objeto recibido no es tipo Base
-            return false;
-        }
-    }
 
     /**
      * getAnimacion
      *
      * Metodo de acceso que regresa la animacion del objeto
      *
-     * @return la animacion del objeto.
+     * @return la instancia de la clase <code>Animacion</code> que pertenece
+     * al objeto.
      *
      */
     public Animacion getAnimacion() {
         return aniPrincipal;
-    }
-
-    /**
-     * toString
-     * 
-     * Metodo para obtener la interfaz del objeto
-     * 
-      * @return un valor <code>String</code> que representa al objeto
-     * 
-     */
-    public String toString() {
-        return " x: " + this.getX() + " y: "+ this.getY() +
-                " ancho: " + this.getAncho() + " alto: " + this.getAlto();
     }
 }
