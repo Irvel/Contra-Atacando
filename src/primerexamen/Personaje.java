@@ -27,26 +27,27 @@ package primerexamen;
 
 import java.awt.*;
 
+
 /**
  * Personaje
  *
- * Modela la definición de los personajes derivados de Base
- * <code>Base</code>
+ * Clase derivada de <code>Base</code> que modela un objeto gráfico y
+ * contiene métodos dedicados para regresar una velocidad aleatoria con
+ * límites inferior y superior preestablecidos.
  *
- * @author XXXXXXX
- * @version 99
- * @date 99/XXX/99
+ * @author Irvel
+ * @version 0.1
  */
-
 public class Personaje extends Base {
     private int iLowerbound;
     private int iUpperbound;
 
+
     /**
      * Personaje
      *
-     * Metodo constructor usado para crear el objeto personaje
-     * creando el icono a partir de una imagen
+     * Metodo constructor usado para crear el objeto personaje con imagen
+     * estática y límites de velocidad predefinidos.
      *
      * @param iX es la <code>posicion en x</code> del objeto.
      * @param iY es la <code>posicion en y</code> del objeto.
@@ -61,6 +62,21 @@ public class Personaje extends Base {
         this.iUpperbound = iUpperbound;
     }
 
+
+    /**
+     * Personaje
+     *
+     * Metodo constructor usado para crear el objeto personaje con una
+     * animación de la clase <code>Animacion</code> y límites de velocidad
+     * predefinidos.
+     *
+     * @param iX es la <code>posicion en x</code> del objeto.
+     * @param iY es la <code>posicion en y</code> del objeto.
+     * @param iLowerbound es el <code>ancho</code> del objeto.
+     * @param iUpperbound es el <code>Largo</code> del objeto.
+     * @param anim es la <code>Animacion</code> del objeto.
+     *
+     */
     public Personaje(int iX, int iY, Animacion anim, int iLowerbound, int
             iUpperbound) {
         super(iX, iY, anim);
@@ -68,6 +84,17 @@ public class Personaje extends Base {
         this.iUpperbound = iUpperbound;
     }
 
+
+    /**
+     * getVel()
+     *
+     * Metodo de acceso que regresa una velocidad aleatoria dentro del rango
+     * iUpperbound - iLowerbound.
+     *
+     * @return un valor entero de velocidad generado de forma
+     * aleatoria.
+     *
+     */
     public int getVel(){
         // Elige al azar una velocidad entre el rango
         return (int)(Math.random() *

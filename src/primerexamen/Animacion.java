@@ -37,7 +37,7 @@ import java.util.ArrayList;
  *
  * @author Irvel
  * @author Jorge
- * @version 0.1
+ * @version 0.2
  */
 public class Animacion{
 
