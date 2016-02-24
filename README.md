@@ -7,7 +7,7 @@ A Java game built on a JFrame in which the main goal is to shoot falling objects
 - [X] Si se oprime la tecla de espacio, saldrá un disparo hacia arriba
 - [X] Al colisionar con 5 malos, se pierde una vida
 - [ ] Crear un arreglo de balas
-- [ ] Cambiar la funcionalidad de reiniciar a la tecla R
+- [X] Cambiar la funcionalidad de reiniciar a la tecla R
 - [ ] Agregar tipo de malos especiales que vayan hacia el personaje y que sean un 10% del número de malos totales
 - [ ] Si se oprime la tecla A el disparo saldrá en 45 grados a la izquierda
 - [ ] Si se oprime la tecla S el disparo saldrá en 45 grados a la derecha
