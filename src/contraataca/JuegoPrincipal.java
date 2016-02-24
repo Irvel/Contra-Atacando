@@ -55,9 +55,8 @@ import java.util.ArrayList;
 
 public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
 
-    private Base basJugador;                 // El objeto del jugador
-    private ArrayList<Malo> arrMalos;   // Lista de personajes malos
-    private ArrayList<Malo> arrBuenos;  // Lista de personajes buenos
+    private Base jugPrincipal;                 // El objeto del jugador
+    private ArrayList<Malo> arrMalos;        // Lista de personajes malos
     private Image imaImagenFondo;            // Para dibujar la imagen de fondo
     private Image imaGameOver;               // Para dibujar la imagen final
     private int iVidas;                      // El # de vidas del jugador
@@ -67,13 +66,11 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
     // El número de veces que el jugador ha sido golpeado por un malo
     private int iContGolpe;
     private int iCantidadMalos;               // Cantidad al azar de malos
-    private int iCantidadBuenos;              // Cantidad al azar de buenos
     private int iTeclaActual;                 // La ultima tecla presionada
     private long lTiempoActual;               // El tiempo desde la ultima
     private Image imaImagenApplet;            // Imagen a proyectar en JFrame
     private Graphics graGraficaApplet;        // Objeto grafico de la Imagen
     private Image imaPaused;                  // Imagen a proyectar cuando este pausado
-    private SoundClip sBueno;                 // Sonido colision con un bueno
     private SoundClip sMalo;                  // Sonido colision con un malo
     private static final int IWIDTH = 800;    // El ancho del JFrame
     private static final int IHEIGHT = 600;   // El alto del JFrame
@@ -234,7 +231,6 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
      *
      */
     private void cargarSonidos() {
-        sBueno = new SoundClip("aPuntosGanados.wav");
         sMalo = new SoundClip("aVidaPerdida.wav");
     }
 
@@ -315,7 +311,7 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
         guardaOCarga();     // Carga un juego previo o almacena el juego actual
         mueveBala();        // Mueve a la bala si existe
         iTeclaActual = 0;   // Reestablece la útima tecla presionada a ninguna
-        muevePersonajes();  // Mueve a los personajes buenos y malos
+        mueveMalos();  // Mueve a los personajes malos
         animaMalos();       // Actualiza la animacion de cada malo
         checaVidas();       // Resta vidas de acuerdo al valor de iContGolpe
         if (bFirstTime){
@@ -406,22 +402,16 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
 
 
     /**
-     * muevePersonajes()
+     * mueveMalos()
      *
      * Metodo que actualiza la posicion de los personajes malos
      *
      */
-    private void muevePersonajes() {
+    private void mueveMalos() {
         // Mueve a los personajes malos
         for(Malo perMalo : arrMalos){
             perMalo.setY(perMalo.getY() + perMalo.getVelY());
         }
-        // Mueve a los personajes bueno
-        /*
-        for(Malo perBueno : arrBuenos){
-            perBueno.setX(perBueno.getY() + perBueno.getVel());
-        }
-        */
     }
 
 
@@ -459,7 +449,6 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
                                              basJugador.getHeight());
         // Maneja las colisiones del jugador con los personajes
         checarColisionMalos(recJugador);
-        //checarColisionBuenos(recJugador);
         if (bMovBala){
             Rectangle recBala = new Rectangle(basBala.getX(),
                                               basBala.getY(),
@@ -497,34 +486,6 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
         if (basBala.getY() <= 0){
             bPintarBala = false;
             bPressedBala = true;
-        }
-    }
-
-    /**
-     * checarColisionBuenos()
-     *
-     * Metodo usado para checar la colision entre el jugador y los personajes
-     * buenos.
-     *
-     */
-    private void checarColisionBuenos(Rectangle recJugador) {
-        Rectangle recBueno;
-        // Revisar si el jugador está colisionando con un bueno
-        for(Malo perBueno : arrBuenos){
-            recBueno = new Rectangle(perBueno.getX(),
-                                     perBueno.getY(),
-                                     perBueno.getWidth(),
-                                     perBueno.getHeight());
-            if(recJugador.intersects(recBueno)){
-                iScore += 10;
-                sBueno.play();
-                reposicionaBueno(perBueno);
-            }
-
-            // Revisar si el personaje llegó al la orilla del applet
-            if(perBueno.getX() > getWidth()){
-                reposicionaBueno(perBueno);
-            }
         }
     }
 
@@ -569,21 +530,6 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
         int iPosY = getYRandom();
         perMalo.setX(iPosX);
         perMalo.setY(iPosY);
-    }
-
-
-    /**
-     * reposicionaBueno()
-     *
-     * Metodo usado para reinicializar la posición de un malo fuera del
-     * applet por la izquierda.
-     *
-     */
-    private void reposicionaBueno(Malo perBueno) {
-        int iPosX = getXRandom() - getWidth();
-        int iPosY = getYRandom();
-        perBueno.setX(iPosX);
-        perBueno.setY(iPosY);
     }
 
 
@@ -640,11 +586,6 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
                 for (Malo perMalo : arrMalos) {
                     perMalo.paint(graDibujo, this);
                 }
-                /*
-                for (Malo perBueno : arrBuenos) {
-                    perBueno.paint(graDibujo, this);
-                }
-                */
 
                 if (bPaused){
                     //Dibuja la imagen Pausada cuando se pausa el juego
