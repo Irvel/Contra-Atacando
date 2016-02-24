@@ -64,7 +64,7 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
     private int iScore;                      // El score del jugador
     private Base basBala;                    // El objeto bala
 
-    // El numero de veces que le jugador ha golpeado un malo
+    // El número de veces que el jugador ha sido golpeado por un malo
     private int iContGolpe;
     private int iCantidadMalos;               // Cantidad al azar de malos
     private int iCantidadBuenos;              // Cantidad al azar de buenos
@@ -85,7 +85,7 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
     private boolean bReleased;                // Checar si la tecla esta siendo oprimida
     private boolean bPaused;                  // Checar si el juego esta pausado
     private boolean bGameOver;                // Checar si el juego termino
-    private boolean bFirstTime;                // Checar si es la primera vez
+    private boolean bFirstTime;               // Checar si es la primera vez
     /**
      * init()
      *
@@ -230,7 +230,7 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
     /**
      * cargarSonidos()
      *
-     * Método que carga los sonidos de las colisiones con el bueno y con el malo
+     * Método que carga el sonido de las colisiones con el malo
      *
      */
     private void cargarSonidos() {
@@ -408,8 +408,7 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
     /**
      * muevePersonajes()
      *
-     * Metodo que actualiza la posicion de los personajes buenos y de
-     * los personajes malos.
+     * Metodo que actualiza la posicion de los personajes malos
      *
      */
     private void muevePersonajes() {
@@ -534,7 +533,7 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
      * checarColisionMalos()
      *
      * Metodo usado para checar la colision entre el jugador y los personajes
-     * buenos.
+     * malos.
      *
      */
     private void checarColisionMalos(Rectangle recJugador) {
@@ -618,8 +617,8 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
      * paintGame(Graphics graDibujo)
      *
      * Método que dibuja todos los elementos del Juego en el JFrame
-     * incluyendo el fondo, el jugador principal, los personajes buenos y
-     * malos y el tablero de score y vidas.
+     * incluyendo el fondo, el jugador principal, los personajes malos, el
+     * tablero de score y las vidas.
      *
      * @param graDibujo es el objeto de <code>Graphics</code> usado para dibujar.
      *
@@ -752,8 +751,8 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
      * grabaArchivo()
      *
      * Método usado para guardar la posicion de cada uno de los personajes
-     * buenos y malos del juego actual. También guarda el número de vidas,
-     * score y las coordenadas del jugador en el JFrame.
+     * malos del juego actual. También guarda el número de vidas, score y las
+     * coordenadas del jugador en el JFrame.
      *
      */
     public void grabaArchivo() throws IOException{
