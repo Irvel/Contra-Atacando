@@ -129,7 +129,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
         // Calcula el centro tomando en cuenta las dimensiones del jugador
         int iMitadX = (IWIDTH / 2) - (90 / 2);
-        int iMitadY = (IHEIGHT / 2) - (121 / 2);
+        int iMitadY = (IHEIGHT) - (121);
 
         // Crea el objeto del jugador principal en el centro del mapa
         basJugador = new Base(iMitadX,
