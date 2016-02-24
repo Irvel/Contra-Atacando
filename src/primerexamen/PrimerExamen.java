@@ -58,6 +58,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     private Base basJugador;                 // El objeto del jugador
     private ArrayList<Personaje> arrMalos;   // Lista de personajes malos
     private ArrayList<Personaje> arrBuenos;  // Lista de personajes buenos
+    private ArrayList<Base> arrBalas;        // Lista de balas
     private Image imaImagenFondo;            // Para dibujar la imagen de fondo
     private Image imaGameOver;               // Para dibujar la imagen final
     private int iVidas;                      // El # de vidas del jugador
@@ -85,7 +86,9 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     private boolean bReleased;                // Checar si la tecla esta siendo oprimida
     private boolean bPaused;                  // Checar si el juego esta pausado
     private boolean bGameOver;                // Checar si el juego termino
-    private boolean bFirstTime;                // Checar si es la primera vez
+    private boolean bFirstTime;               // Checar si es la primera vez
+    private int iDireccionX;                  // Dirección X de la bala
+    private int iDireccionY;                  // Dirección Y de la bala
     /**
      * init()
      *
@@ -104,6 +107,8 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         bPressedBala = true;
         bReleased = true;
         bFirstTime = true;
+        iDireccionX = 0;
+        iDireccionY = 1;
 
         // Genera de 8 a 10 malos de forma aleatoria
         iCantidadMalos = (int)(Math.random() * 3) + 8;
@@ -410,7 +415,10 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     private void mueveBala(){
         if (bReleased){
             if (bMovBala){
-                basBala.setY(basBala.getY() - 1);
+                for (Base basBala: arrBalas){
+                    basBala.setY(basBala.getY() + iDireccionY);
+                    basBala.setX(basBala.getX() + iDireccionX);
+                }
             }
         }
     }
@@ -898,6 +906,17 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                 cargaMalo();
             }
         }
+        if (iTeclaActual == KeyEvent.VK_A){
+            if (bPressedBala){
+                iDireccionX = -1;
+                cargaMalo();
+            }
+        }
+        if (iTeclaActual == KeyEvent.VK_S){
+            if (bPressedBala){
+                iDireccionX = 1;
+            }
+        }
         if (iTeclaActual == KeyEvent.VK_P){
             bPaused = !bPaused;
         }
@@ -923,8 +942,8 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         URL urlBala = this.getClass().getResource("bullet.png");
         int iPosX = basJugador.getX() + 90/2;
         int iPosY = basJugador.getY();
-        
-        basBala = new Base(iPosX,iPosY,10,10,
+        iDireccionY = 1;
+        basBala = new Base(iPosX,iPosY,iDireccionX,iDireccionY,
                             Toolkit.getDefaultToolkit().getImage(urlBala));
         
         
@@ -936,6 +955,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         if (iTeclaActual == KeyEvent.VK_SPACE){
             System.out.println("Released");
             bReleased = true;
+            bMovBala = false;
         }
     }
     
