@@ -62,6 +62,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     private Image imaGameOver;               // Para dibujar la imagen final
     private int iVidas;                      // El # de vidas del jugador
     private int iScore;                      // El score del jugador
+    private Base basBala;                    // El objeto bala
 
     // El numero de veces que le jugador ha golpeado un malo
     private int iContGolpe;
@@ -76,8 +77,10 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     private static final int IWIDTH = 800;    // El ancho del JFrame
     private static final int IHEIGHT = 600;   // El alto del JFrame
     private String sNombreArchivo;            // Nombre del archivo
-
-
+    private boolean bMovBala;                 // Checar si hay que mover la bala
+    private boolean bPintarBala;              // Checar si hay que pintar la bala
+    private boolean bPressedBala;             // Checar si haber más de una bala
+    private boolean bReleased;                // Checar si la tecla esta siendo oprimida
     /**
      * init()
      *
@@ -90,6 +93,10 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         iVidas = 5;
         iScore = 0;
         iTeclaActual = 0;
+        bMovBala = false;
+        bPintarBala = false;
+        bPressedBala = true;
+        bReleased = true;
 
         // Genera de 8 a 10 malos de forma aleatoria
         iCantidadMalos = (int)(Math.random() * 3) + 8;
@@ -321,6 +328,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     public void actualiza(){
         mueveJugador();     // Mueve el jugador si es que se presionó una tecla
         guardaOCarga();     // Carga un juego previo o almacena el juego actual
+        mueveBala();        // Mueve a la bala si existe
         iTeclaActual = 0;   // Reestablece la útima tecla presionada a ninguna
         muevePersonajes();  // Mueve a los personajes buenos y malos
         animaMalos();       // Actualiza la animacion de cada malo
@@ -368,12 +376,17 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     private void mueveJugador() {
         switch(iTeclaActual) {
             case KeyEvent.VK_LEFT:
-                System.out.println("Enters");
                 basJugador.setX(basJugador.getX() - basJugador.getVelX());
                 break;
             case KeyEvent.VK_RIGHT:
                 basJugador.setX(basJugador.getX() + basJugador.getVelX());
                 break;
+        }
+    }
+    
+    private void mueveBala(){
+        if (bMovBala){
+            basBala.setY(basBala.getY() - 1);
         }
     }
 
@@ -449,6 +462,13 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         // Maneja las colisiones del jugador con los personajes
         checarColisionMalos(recJugador);
         checarColisionBuenos(recJugador);
+        if (bMovBala){
+            Rectangle recBala = new Rectangle(basBala.getX(),
+                                          basBala.getY(),
+                                          basBala.getWidth(),
+                                          basBala.getHeight());
+            checarColisionBala(recBala);
+        }
 
         // Maneja las colisiones del jugador con los bordes del Applet
         if (basJugador.getX() >= getWidth() - basJugador.getWidth()) {
@@ -459,7 +479,44 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         }
 
     }
-
+    
+    public void checarColisionBala(Rectangle recBala){
+        Rectangle recBueno;
+        // Revisar si la bala está colisionando con un bueno
+        for(Personaje perBueno : arrBuenos){
+            recBueno = new Rectangle(perBueno.getX(),
+                                     perBueno.getY(),
+                                     perBueno.getWidth(),
+                                     perBueno.getHeight());
+            if(recBala.intersects(recBueno)){
+                iScore += 10;
+                sBueno.play();
+                bPintarBala = false;
+                reposicionaBueno(perBueno);
+                bPressedBala = true;
+            }
+        }
+        
+        Rectangle recMalo;
+        // Revisar la bala está colisionando con un malo
+        for(Personaje perMalo: arrMalos){
+            recMalo = new Rectangle(perMalo.getX(),
+                                    perMalo.getY(),
+                                    perMalo.getWidth(),
+                                    perMalo.getHeight());
+            if(recBala.intersects(recMalo)){
+                iContGolpe++;
+                bPintarBala = false;
+                bPressedBala = true;
+                reposicionaMalo(perMalo);
+            }
+        }
+        // Revisar si la bala se salió del applet
+        if (basBala.getY() <= 0){
+            bPintarBala = false;
+            bPressedBala = true;
+        }
+    }
 
     /**
      * checarColisionBuenos()
@@ -598,7 +655,6 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
                 // Dibuja los objetos principales del Applet
                 basJugador.paint(graDibujo, this);
-
                 for (Personaje perMalo : arrMalos) {
                     perMalo.paint(graDibujo, this);
                 }
@@ -606,6 +662,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                 for (Personaje perBueno : arrBuenos) {
                     perBueno.paint(graDibujo, this);
                 }
+                
                 graDibujo.drawString("Score: " + iScore + "   Vidas:" + iVidas,
                                      50, 50);
             }
@@ -622,6 +679,9 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         else {
             // Despliega un mensaje mientras se carga el dibujo
             graDibujo.drawString("No se cargo la imagen..", 20, 20);
+        }
+        if (basBala != null && bPintarBala){
+            basBala.paint(graDibujo,this);
         }
     }
 
@@ -782,14 +842,41 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
             catch (IOException e){
             }
         }
+        if (iTeclaActual == KeyEvent.VK_SPACE){
+            if (bPressedBala && bReleased){
+                System.out.println("Enters");
+                bPressedBala = false;
+                cargaMalo();
+            }
+        }
     }
-
+    
+    public void despliegaMalo(){
+        
+    }
+    
+    public void cargaMalo(){
+        bMovBala = true;
+        bPintarBala = true;
+        URL urlBala = this.getClass().getResource("bullet.png");
+        int iPosX = basJugador.getX() + 90/2;
+        int iPosY = basJugador.getY();
+        
+        basBala = new Base(iPosX,iPosY,10,10,
+                            Toolkit.getDefaultToolkit().getImage(urlBala));
+        
+        
+    }
+    
     @Override
     public void keyReleased(KeyEvent key) {
-
+        iTeclaActual = key.getKeyCode();
+        if (iTeclaActual == KeyEvent.VK_SPACE){
+            System.out.println("Released");
+            bReleased = true;
+        }
     }
-
-
+    
     public static void main(String [] args){
         PrimerExamen hola = new PrimerExamen();
         hola.setSize(IWIDTH,IHEIGHT);
