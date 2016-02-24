@@ -23,48 +23,47 @@
  * SOFTWARE.
  */
 
-package primerexamen;
+package contraataca;
 
 import java.awt.*;
 
 
 /**
- * Personaje
+ * Malo
  *
  * Clase derivada de <code>Base</code> que modela un objeto gráfico y
  * contiene métodos dedicados para regresar una velocidad aleatoria con
  * límites inferior y superior preestablecidos.
  *
+ * Al actualizar su posición mediante el método avanza(), el objeto se moverá
+ * hacia abajo.
+ *
  * @author Irvel
- * @version 0.1
+ * @author Jorge
+ * @version 0.2
  */
-public class Personaje extends Base {
-    private int iLowerbound;
-    private int iUpperbound;
-
+public class Malo extends Base {
+    // El factor de aumento que se utiliza para aumentar la velocidad del malo
+    private final int iFACTORAUMENTO = 2;
 
     /**
-     * Personaje
+     * Malo
      *
      * Metodo constructor usado para crear el objeto personaje con imagen
      * estática y límites de velocidad predefinidos.
      *
      * @param iX es la <code>posicion en x</code> del objeto.
      * @param iY es la <code>posicion en y</code> del objeto.
-     * @param iLowerbound es el <code>ancho</code> del objeto.
-     * @param iUpperbound es el <code>Largo</code> del objeto.
      * @param imaImagen es la <code>imagen</code> del objeto.
      *
      */
-    public Personaje(int iX, int iY, Image imaImagen, int iLowerbound, int iUpperbound) {
+    public Malo(int iX, int iY, Image imaImagen) {
         super(iX, iY, imaImagen);
-        this.iLowerbound = iLowerbound;
-        this.iUpperbound = iUpperbound;
     }
 
 
     /**
-     * Personaje
+     * Malo
      *
      * Metodo constructor usado para crear el objeto personaje con una
      * animación de la clase <code>Animacion</code> y límites de velocidad
@@ -72,32 +71,21 @@ public class Personaje extends Base {
      *
      * @param iX es la <code>posicion en x</code> del objeto.
      * @param iY es la <code>posicion en y</code> del objeto.
-     * @param iLowerbound es el <code>ancho</code> del objeto.
-     * @param iUpperbound es el <code>Largo</code> del objeto.
      * @param anim es la <code>Animacion</code> del objeto.
      *
      */
-    public Personaje(int iX, int iY, Animacion anim, int iLowerbound, int
-            iUpperbound) {
-        super(iX, iY, anim);
-        this.iLowerbound = iLowerbound;
-        this.iUpperbound = iUpperbound;
+    public Malo(int iX, int iY, int iVX, int iVY,  Animacion anim) {
+        super(iX, iY, iVX, iVY, anim);
     }
 
 
     /**
-     * getVel()
+     * aumentaVel()
      *
-     * Metodo de acceso que regresa una velocidad aleatoria dentro del rango
-     * iUpperbound - iLowerbound.
-     *
-     * @return un valor entero de velocidad generado de forma
-     * aleatoria.
+     * Metodo que aumenta la velocidad actual del objeto malo.
      *
      */
-    public int getVel(){
-        // Elige al azar una velocidad entre el rango
-        return (int)(Math.random() *
-                ((iUpperbound + 1  - iLowerbound) + 1) + iLowerbound);
+    public void aumentaVel(){
+        this.setVelY(this.getVelY() + iFACTORAUMENTO);
     }
 }

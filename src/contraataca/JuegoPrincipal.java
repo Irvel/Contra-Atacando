@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-package primerexamen;
+package contraataca;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +35,7 @@ import java.util.ArrayList;
 
 
 /**
- * PrimerExamen
+ * JuegoPrincipal
  *
  * Juego en <code>JFrame</code> que presenta un jugador principal que puede
  * ser controlado con las teclas Q, A, P, L. El objetivo del juego es esquivar
@@ -53,11 +53,11 @@ import java.util.ArrayList;
  * @date 17/02/2016
  */
 
-public class PrimerExamen extends JFrame implements Runnable, KeyListener {
+public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
 
     private Base basJugador;                 // El objeto del jugador
-    private ArrayList<Personaje> arrMalos;   // Lista de personajes malos
-    private ArrayList<Personaje> arrBuenos;  // Lista de personajes buenos
+    private ArrayList<Malo> arrMalos;   // Lista de personajes malos
+    private ArrayList<Malo> arrBuenos;  // Lista de personajes buenos
     private Image imaImagenFondo;            // Para dibujar la imagen de fondo
     private Image imaGameOver;               // Para dibujar la imagen final
     private int iVidas;                      // El # de vidas del jugador
@@ -89,7 +89,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     /**
      * init()
      *
-     * Método que inicializa las variables miembro de la clase PrimerExamen.
+     * Método que inicializa las variables miembro de la clase JuegoPrincipal.
      * También crea los objetos a ser utilizados en el <code>JFrame</code>.
      *
      */
@@ -109,9 +109,6 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         iCantidadMalos = (int)(Math.random() * 3) + 8;
         cargarMalos(iCantidadMalos);
 
-        // Genera de 10 a 13 buenos de forma aleatoria
-        iCantidadBuenos = (int)(Math.random() * 4) + 10;
-        //crearBuenos(iCantidadBuenos);
 
         // Crea la imagen de fondo.
         URL urlImagenFondo = this.getClass().getResource("sTatooine.jpg");
@@ -159,13 +156,13 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
 
     /**
-     * PrimerExamen()
+     * JuegoPrincipal()
      *
-     * Método constructor del JFrame PrimerExamen que manda inicializar las
+     * Método constructor del JFrame JuegoPrincipal que manda inicializar las
      * variables miembro y crea el <code>Thread</code> principal del Juego.
      *
      */
-    public PrimerExamen() {
+    public JuegoPrincipal() {
         init();
         Thread th = new Thread(this);
         th.start();
@@ -218,43 +215,16 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
             int iPosX = getXRandom();
             int iPosY = getYRandom();
 
-            // Agregar un objeto nuevo de personaje con velocidad de 3 o 5
-            arrMalos.add(new Personaje(iPosX,
-                                       iPosY,
-                                       new Animacion(arrCuadros),
-                                       3,
-                                       5));
+            // Agregar un objeto nuevo de personaje con velocidad inicial de
+            // -3 en el eje Y y velocidad 0 en el eje X
+            arrMalos.add(new Malo(iPosX,
+                                  iPosY,
+                                  0,
+                                  -3,
+                                  new Animacion(arrCuadros)));
         }
     }
 
-
-    /**
-     * crearBuenos()
-     *
-     * Método que carga la imagen de los personajes buenos y genera una
-     * cantidad pre-determinada de personajes buenos con coordenadas
-     * aleatorias fuera del applet de la parte izquierda.
-     *
-     * @param iCantidad es el <code>número</code> de objetos buenos a crear.
-     *
-     */
-    private void crearBuenos(int iCantidad) {
-        arrBuenos = new ArrayList<>();
-
-        URL urlImaBueno = this.getClass().getResource("sCookie.png");
-        Image imaBueno = Toolkit.getDefaultToolkit()
-                                .getImage(urlImaBueno)
-                                .getScaledInstance(50,50, Image.SCALE_SMOOTH);
-
-        for (int i = 0; i < iCantidad; i++) {
-            // Genera una posición aleatoria fuera del applet por la izquierda
-            int iPosX = getXRandom() - IWIDTH;
-            int iPosY = getYRandom();
-
-            // Agregar un objeto nuevo de personaje con velocidad de 1 o 3
-            arrBuenos.add(new Personaje(iPosX, iPosY, imaBueno, 1, 3));
-        }
-    }
 
 
     /**
@@ -444,12 +414,12 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      */
     private void muevePersonajes() {
         // Mueve a los personajes malos
-        for(Personaje perMalo : arrMalos){
-            perMalo.setY(perMalo.getY() + perMalo.getVel());
+        for(Malo perMalo : arrMalos){
+            perMalo.setY(perMalo.getY() + perMalo.getVelY());
         }
         // Mueve a los personajes bueno
         /*
-        for(Personaje perBueno : arrBuenos){
+        for(Malo perBueno : arrBuenos){
             perBueno.setX(perBueno.getY() + perBueno.getVel());
         }
         */
@@ -469,7 +439,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                 System.currentTimeMillis() - lTiempoActual;
         lTiempoActual += tiempoTranscurrido;
 
-        for(Personaje perMalo : arrMalos){
+        for(Malo perMalo : arrMalos){
             // Actualiza los cuadros en la animacion
             perMalo.getAnimacion().actualiza(tiempoTranscurrido);
         }
@@ -512,7 +482,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     public void checarColisionBala(Rectangle recBala){
         Rectangle recMalo;
         // Revisar la bala está colisionando con un malo
-        for(Personaje perMalo: arrMalos){
+        for(Malo perMalo: arrMalos){
             recMalo = new Rectangle(perMalo.getX(),
                                     perMalo.getY(),
                                     perMalo.getWidth(),
@@ -541,7 +511,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     private void checarColisionBuenos(Rectangle recJugador) {
         Rectangle recBueno;
         // Revisar si el jugador está colisionando con un bueno
-        for(Personaje perBueno : arrBuenos){
+        for(Malo perBueno : arrBuenos){
             recBueno = new Rectangle(perBueno.getX(),
                                      perBueno.getY(),
                                      perBueno.getWidth(),
@@ -570,7 +540,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     private void checarColisionMalos(Rectangle recJugador) {
         Rectangle recMalo;
         // Revisar si el jugador está colisionando con un malo
-        for(Personaje perMalo: arrMalos){
+        for(Malo perMalo: arrMalos){
             recMalo = new Rectangle(perMalo.getX(),
                                     perMalo.getY(),
                                     perMalo.getWidth(),
@@ -595,7 +565,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      * applet por la derecha.
      *
      */
-    private void reposicionaMalo(Personaje perMalo) {
+    private void reposicionaMalo(Malo perMalo) {
         int iPosX = getXRandom();
         int iPosY = getYRandom();
         perMalo.setX(iPosX);
@@ -610,7 +580,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      * applet por la izquierda.
      *
      */
-    private void reposicionaBueno(Personaje perBueno) {
+    private void reposicionaBueno(Malo perBueno) {
         int iPosX = getXRandom() - getWidth();
         int iPosY = getYRandom();
         perBueno.setX(iPosX);
@@ -668,11 +638,11 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
 
                 // Dibuja los objetos principales del Applet
                 basJugador.paint(graDibujo, this);
-                for (Personaje perMalo : arrMalos) {
+                for (Malo perMalo : arrMalos) {
                     perMalo.paint(graDibujo, this);
                 }
                 /*
-                for (Personaje perBueno : arrBuenos) {
+                for (Malo perBueno : arrBuenos) {
                     perBueno.paint(graDibujo, this);
                 }
                 */
@@ -757,23 +727,6 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     }
 
 
-    /**
-     * leeBuenosArchivo()
-     *
-     * Método usado para leer la posicion de cada uno de los personajes
-     * buenos de un estado previo y cargarlas al juego actual.
-     *
-     * @param fileIn es el <code>archivo</code> de texto a leer con el estado
-     *               previo del juego.
-     *
-     */
-    private void leeBuenosArchivo(BufferedReader fileIn) throws IOException {
-        // Lee las coordenadas X y Y de cada bueno de acuerdo a iCantidadBuenos
-        for (int iC = 0; iC < iCantidadBuenos; ++iC){
-            arrBuenos.get(iC).setX(Integer.parseInt(fileIn.readLine()));
-            arrBuenos.get(iC).setY(Integer.parseInt(fileIn.readLine()));
-        }
-    }
 
 
     /**
@@ -814,13 +767,6 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         for (int iC = 0; iC < iCantidadMalos;++iC){
             fileOut.println(arrMalos.get(iC).getX());
             fileOut.println(arrMalos.get(iC).getY());
-        }
-
-        // Guarda la cantidad de buenos actuales y la posición de cada uno
-        fileOut.println(iCantidadBuenos);
-        for (int iC = 0; iC < iCantidadBuenos;++iC){
-            fileOut.println(arrBuenos.get(iC).getX());
-            fileOut.println(arrBuenos.get(iC).getY());
         }
 
         // Guarda las coordenadas actuales del jugador
@@ -903,7 +849,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         if (iTeclaActual == KeyEvent.VK_P){
             bPaused = !bPaused;
         }
-        if (iTeclaActual == KeyEvent.VK_S){
+        if (iTeclaActual == KeyEvent.VK_R){
             if (bGameOver){
                 try{
                     leeArchivoInicial();
@@ -942,7 +888,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     }
 
     public static void main(String [] args){
-        PrimerExamen hola = new PrimerExamen();
+        JuegoPrincipal hola = new JuegoPrincipal();
         hola.setSize(IWIDTH,IHEIGHT);
         hola.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         hola.setVisible(true);

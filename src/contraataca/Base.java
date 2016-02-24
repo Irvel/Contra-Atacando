@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-package primerexamen;
+package contraataca;
 
 import javax.swing.*;
 import java.awt.*;
@@ -121,6 +121,35 @@ public class Base {
         this.iY = iY;
         this.iVelX = 0;
         this.iVelY = 0;
+        this.imaImagen = anim.getImagen();
+
+        // Extrae el ancho y alto de la animacion para las variables miembro
+        ImageIcon imiImagen = new ImageIcon(anim.getImagen());
+        this.iWidth = imiImagen.getIconWidth();
+        this.iHeight = imiImagen.getIconHeight();
+        aniPrincipal = anim;
+    }
+
+
+    /**
+     * Base
+     *
+     * Metodo constructor usado para crear un objeto Base con una animación
+     * de la clase <code>Animación</code> y velocidad predefinida.
+     *
+     * @param iX es la <code>posicion en x</code> del objeto.
+     * @param iY es la <code>posicion en y</code> del objeto.
+     * @param iVX es la <code>velocidad en x</code> del objeto.
+     * @param iVY es la <code>velocidad en y</code> del objeto.
+     * @param anim es la <code>Animacion</code> del objeto.
+     *
+     */
+    public Base(int iX, int iY, int iVX, int iVY,  Animacion anim) {
+        this.iX = iX;
+        this.iY = iY;
+        this.iVelX = iVX;
+        this.iVelY = iVY;
+
         this.imaImagen = anim.getImagen();
 
         // Extrae el ancho y alto de la animacion para las variables miembro

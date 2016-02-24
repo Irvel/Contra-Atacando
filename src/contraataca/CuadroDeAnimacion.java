@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-package primerexamen;
+package contraataca;
 
 import java.awt.*;
 
