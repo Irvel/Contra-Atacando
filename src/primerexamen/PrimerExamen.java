@@ -81,6 +81,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     private boolean bPintarBala;              // Checar si hay que pintar la bala
     private boolean bPressedBala;             // Checar si haber más de una bala
     private boolean bReleased;                // Checar si la tecla esta siendo oprimida
+    private boolean bPaused;                  // Checar si el juego esta pausado
     /**
      * init()
      *
@@ -302,22 +303,23 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
            movimientos y se vuelve a pintar todo
         */
         while (true) {
-            if(iVidas > 0){
-                actualiza();
-                checarColision();
+            if (!bPaused){
+                if(iVidas > 0){
+                    actualiza();
+                    checarColision();
+                    repaint();
+                }
             }
-            repaint();
-            try	{
-                // El hilo del juego se duerme.
-                Thread.sleep (20);
-            }
-            catch (InterruptedException iexError) {
-                System.out.println("Hubo un error en el juego " +
-                                           iexError.toString());
-            }
-        }
+                try	{
+                    // El hilo del juego se duerme.
+                    Thread.sleep (20);
+                }
+                catch (InterruptedException iexError) {
+                    System.out.println("Hubo un error en el juego " +
+                                            iexError.toString());
+                }
+             }   
     }
-
 
     /**
      * actualiza()
@@ -847,6 +849,15 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                 System.out.println("Enters");
                 bPressedBala = false;
                 cargaMalo();
+            }
+        }
+        if (iTeclaActual == KeyEvent.VK_P){
+            System.out.println("Enters");
+            bPaused = !bPaused;
+            if (bPaused){
+                System.out.println("True");
+            }else{
+                System.out.println("False");
             }
         }
     }
