@@ -128,12 +128,12 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         URL urlJugador = this.getClass().getResource("sJugador.gif");
 
         // Calcula el centro tomando en cuenta las dimensiones del jugador
-        int iMitadX = (IWIDTH / 2) - (90 / 2);
-        int iMitadY = (IHEIGHT) - (121);
+        int iPosX = (IWIDTH / 2) - (90 / 2);
+        int iPosY = (IHEIGHT) - (121);
 
-        // Crea el objeto del jugador principal en el centro del mapa
-        basJugador = new Base(iMitadX,
-                              iMitadY,
+        // Crea el objeto del jugador principal en la parte inferior de la pantalla
+        basJugador = new Base(iPosX,
+                              iPosY,
                               10,
                               10,
                               Toolkit.getDefaultToolkit().getImage(urlJugador));
@@ -367,21 +367,12 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
      */
     private void mueveJugador() {
         switch(iTeclaActual) {
-            case KeyEvent.VK_Q:
+            case KeyEvent.VK_LEFT:
+                System.out.println("Enters");
                 basJugador.setX(basJugador.getX() - basJugador.getVelX());
-                basJugador.setY(basJugador.getY() - basJugador.getVelY());
                 break;
-            case KeyEvent.VK_P:
+            case KeyEvent.VK_RIGHT:
                 basJugador.setX(basJugador.getX() + basJugador.getVelX());
-                basJugador.setY(basJugador.getY() - basJugador.getVelY());
-                break;
-            case KeyEvent.VK_L:
-                basJugador.setX(basJugador.getX() + basJugador.getVelX());
-                basJugador.setY(basJugador.getY() + basJugador.getVelY());
-                break;
-            case KeyEvent.VK_A:
-                basJugador.setX(basJugador.getX() - basJugador.getVelX());
-                basJugador.setY(basJugador.getY() + basJugador.getVelY());
                 break;
         }
     }
@@ -460,12 +451,6 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         checarColisionBuenos(recJugador);
 
         // Maneja las colisiones del jugador con los bordes del Applet
-        if (basJugador.getY() >= getHeight() - basJugador.getHeight()) {
-            basJugador.setY(getHeight() - basJugador.getHeight());
-        }
-        if (basJugador.getY() < 0) {
-            basJugador.setY(0);
-        }
         if (basJugador.getX() >= getWidth() - basJugador.getWidth()) {
             basJugador.setX(getWidth() - basJugador.getWidth());
         }
