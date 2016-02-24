@@ -40,7 +40,7 @@ import java.awt.image.ImageObserver;
  *
  * @author Irvel
  * @author Jorge
- * @version 0.3
+ * @version 0.4
  */
 public class Base {
 
