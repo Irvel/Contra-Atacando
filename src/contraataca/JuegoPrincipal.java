@@ -144,11 +144,11 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
         int iPosY = (IHEIGHT) - (121);
 
         // Crea el objeto del jugador principal en la parte inferior de la pantalla
-        basJugador = new Base(iPosX,
-                              iPosY,
-                              10,
-                              10,
-                              Toolkit.getDefaultToolkit().getImage(urlJugador));
+        jugPrincipal = new Jugador(iPosX,
+                                   iPosY,
+                                   10,
+                                   10,
+                                   Toolkit.getDefaultToolkit().getImage(urlJugador));
     }
 
 
@@ -365,10 +365,10 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
     private void mueveJugador() {
         switch(iTeclaActual) {
             case KeyEvent.VK_LEFT:
-                basJugador.setX(basJugador.getX() - basJugador.getVelX());
+                jugPrincipal.setX(jugPrincipal.getX() - jugPrincipal.getVelX());
                 break;
             case KeyEvent.VK_RIGHT:
-                basJugador.setX(basJugador.getX() + basJugador.getVelX());
+                jugPrincipal.setX(jugPrincipal.getX() + jugPrincipal.getVelX());
                 break;
         }
     }
@@ -443,10 +443,10 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
      *
      */
     public void checarColision(){
-        Rectangle recJugador = new Rectangle(basJugador.getX(),
-                                             basJugador.getY(),
-                                             basJugador.getWidth(),
-                                             basJugador.getHeight());
+        Rectangle recJugador = new Rectangle(jugPrincipal.getX(),
+                                             jugPrincipal.getY(),
+                                             jugPrincipal.getWidth(),
+                                             jugPrincipal.getHeight());
         // Maneja las colisiones del jugador con los personajes
         checarColisionMalos(recJugador);
         if (bMovBala){
@@ -458,11 +458,11 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
         }
 
         // Maneja las colisiones del jugador con los bordes del Applet
-        if (basJugador.getX() >= getWidth() - basJugador.getWidth()) {
-            basJugador.setX(getWidth() - basJugador.getWidth());
+        if (jugPrincipal.getX() >= getWidth() - jugPrincipal.getWidth()) {
+            jugPrincipal.setX(getWidth() - jugPrincipal.getWidth());
         }
-        if (basJugador.getX() < 0) {
-            basJugador.setX(0);
+        if (jugPrincipal.getX() < 0) {
+            jugPrincipal.setX(0);
         }
 
     }
@@ -571,7 +571,7 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
      */
     public void paintGame(Graphics graDibujo) {
         // Verifica que la imagen ya haya sido cargada
-        if (basJugador != null && imaImagenFondo != null) {
+        if (jugPrincipal != null && imaImagenFondo != null) {
             if(iVidas > 0) {
                 // Dibuja la imagen de fondo
                 graDibujo.drawImage(imaImagenFondo,
@@ -582,7 +582,7 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
                                     this);
 
                 // Dibuja los objetos principales del Applet
-                basJugador.paint(graDibujo, this);
+                jugPrincipal.paint(graDibujo, this);
                 for (Malo perMalo : arrMalos) {
                     perMalo.paint(graDibujo, this);
                 }
@@ -662,8 +662,8 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
         leeMalosArchivo(fileIn);
 
         // Lee la posición previa del jugador
-        basJugador.setX(Integer.parseInt(fileIn.readLine()));
-        basJugador.setY(Integer.parseInt(fileIn.readLine()));
+        jugPrincipal.setX(Integer.parseInt(fileIn.readLine()));
+        jugPrincipal.setY(Integer.parseInt(fileIn.readLine()));
     }
 
 
@@ -710,8 +710,8 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
         }
 
         // Guarda las coordenadas actuales del jugador
-        fileOut.println(basJugador.getX());
-        fileOut.println(basJugador.getY());
+        fileOut.println(jugPrincipal.getX());
+        fileOut.println(jugPrincipal.getY());
 
         fileOut.close();
     }
@@ -730,8 +730,8 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
         }
 
         // Guarda las coordenadas actuales del jugador
-        fileOut.println(basJugador.getX());
-        fileOut.println(basJugador.getY());
+        fileOut.println(jugPrincipal.getX());
+        fileOut.println(jugPrincipal.getY());
 
         fileOut.close();
     }
@@ -809,8 +809,8 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
         bMovBala = true;
         bPintarBala = true;
         URL urlBala = this.getClass().getResource("bullet.png");
-        int iPosX = basJugador.getX() + 90/2;
-        int iPosY = basJugador.getY();
+        int iPosX = jugPrincipal.getX() + 90/2;
+        int iPosY = jugPrincipal.getY();
 
         basBala = new Base(iPosX,iPosY,10,10,
                            Toolkit.getDefaultToolkit().getImage(urlBala));
