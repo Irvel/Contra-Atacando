@@ -2,10 +2,6 @@
 A Java game built on a JFrame in which the main goal is to shoot falling objects
 
 ### Missing stuf:
-- [ ] Cambiar el diseño de clases para encapsular los métodos y propiedades de los objetos.
-
-- [ ] Cambiar la imagen del jugador principal
-
 - [X] Pausar el juego presionando la tecla P
 
 - [ ] Cambiar la funcionalidad de reiniciar a la tecla R
@@ -26,3 +22,6 @@ A Java game built on a JFrame in which the main goal is to shoot falling objects
 
 - [ ] Modificar la imagen de GameOver para decirle a ususario como reiniciar el juego
 
+- [ ] Cambiar la imagen del jugador principal
+
+- [ ] Cambiar el diseño de clases para encapsular los métodos y propiedades de los objetos.
