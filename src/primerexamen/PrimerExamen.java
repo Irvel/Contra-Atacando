@@ -72,6 +72,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
     private long lTiempoActual;               // El tiempo desde la ultima
     private Image imaImagenApplet;            // Imagen a proyectar en JFrame
     private Graphics graGraficaApplet;        // Objeto grafico de la Imagen
+    private Image imaPaused;                  // Imagen a proyectar cuando este pausado
     private SoundClip sBueno;                 // Sonido colision con un bueno
     private SoundClip sMalo;                  // Sonido colision con un malo
     private static final int IWIDTH = 800;    // El ancho del JFrame
@@ -110,6 +111,10 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
         // Crea la imagen de fondo.
         URL urlImagenFondo = this.getClass().getResource("sTatooine.jpg");
         imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
+        
+        // Creo la imagen de pausa
+        URL urlImagenPausa = this.getClass().getResource("paused.png");
+        imaPaused = Toolkit.getDefaultToolkit().getImage(urlImagenPausa);
 
         // Crea la imagen para el fin del juego
         URL urlGameOver = this.getClass().getResource("gameOver.png");
@@ -665,6 +670,10 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
                     perBueno.paint(graDibujo, this);
                 }
                 
+                if (bPaused){
+                    graDibujo.drawImage(imaPaused,0,0,getWidth(),getHeight(), this);
+                }
+                
                 graDibujo.drawString("Score: " + iScore + "   Vidas:" + iVidas,
                                      50, 50);
             }
@@ -852,13 +861,7 @@ public class PrimerExamen extends JFrame implements Runnable, KeyListener {
             }
         }
         if (iTeclaActual == KeyEvent.VK_P){
-            System.out.println("Enters");
             bPaused = !bPaused;
-            if (bPaused){
-                System.out.println("True");
-            }else{
-                System.out.println("False");
-            }
         }
     }
     
