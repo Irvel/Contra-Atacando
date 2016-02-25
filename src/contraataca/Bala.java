@@ -74,7 +74,4 @@ public class Bala extends Base {
             }
     }
 
-    public void avanza(){
-        
-    }
 }
