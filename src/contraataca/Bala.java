@@ -40,6 +40,7 @@ import java.awt.*;
  */
 public class Bala extends Base {
 
+    private  char cDireccion;
     /**
      * Malo
      *
@@ -55,26 +56,24 @@ public class Bala extends Base {
      * @param imaImagen es la <code>imagen</code> del objeto.
      *
      */
-    public Bala (int iX, int iY, Image imaImagen, char cTipo){
+    public Bala (int iX, int iY, Image imaImagen,char cTipo){
         super(iX,iY,imaImagen);
         this.setVelX(0);
-        this.setVelY(1);
-
-        if (cTipo == 'A'){
-            this.setVelX(-1);
-            this.setVelY(-1);
-        }
-        else if (cTipo == 'S'){
-            this.setVelX(1);
-            this.setVelY(-1);
-        }
-        else if (cTipo == 'N'){
-                this.setVelX(0);
-                this.setVelY(-1);
-            }
+        this.setVelY(-1);
+        cDireccion = cTipo;
     }
 
     public void avanza(){
-        
+       switch (cDireccion){
+            case 'A':
+               this.setX(this.getX() - 1);
+               this.setY(this.getY() - 1);
+            case 'S':
+                System.out.println("S");
+               this.setX(this.getX() + 1);
+               this.setY(this.getY() - 1);
+            default:
+                this.setY(this.getY() - 1);
+       }
     }
 }
