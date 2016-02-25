@@ -68,10 +68,11 @@ public class Bala extends Base {
             case 'A':
                this.setX(this.getX() - 1);
                this.setY(this.getY() - 1);
+               break;
             case 'S':
-                System.out.println("S");
                this.setX(this.getX() + 1);
                this.setY(this.getY() - 1);
+               break;
             default:
                 this.setY(this.getY() - 1);
        }

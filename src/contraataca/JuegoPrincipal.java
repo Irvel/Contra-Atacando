@@ -55,14 +55,14 @@ import java.util.ArrayList;
 
 public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
 
-    private Base jugPrincipal;                 // El objeto del jugador
+    private Base jugPrincipal;               // El objeto del jugador
     private ArrayList<Malo> arrMalos;        // Lista de personajes malos
     private ArrayList<Bala> arrBalas;        // Lista de balas
+    private ArrayList<ImageIcon> arrVidas;   // Lista de vidas
     private Image imaImagenFondo;            // Para dibujar la imagen de fondo
     private Image imaGameOver;               // Para dibujar la imagen final
     private int iVidas;                      // El # de vidas del jugador
     private int iScore;                      // El score del jugador
-    private Bala balBala;                    // El objeto bala
 
     // El número de veces que el jugador ha sido golpeado por un malo
     private int iContGolpe;
@@ -85,7 +85,7 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
     private boolean bGameOver;                // Checar si el juego termino
     private boolean bFirstTime;               // Checar si es la primera vez
     private char cDireccion;                  // Direccion a mover la bala
-    private int iVelocidad;
+    private int iVelocidad;                   // Velocidad de los malos 
     /**
      * init()
      *
@@ -128,10 +128,31 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
 
         // Crea el jugador principal
         cargarJugador();
+        
+        // Crea la imagen de vidas
+        cargaVidas();
 
         // Carga los sonidos de colisiones
         cargarSonidos();
         addKeyListener(this);
+    }
+    
+    /**
+     * cargaVidas()
+     *
+     * Método carga la imagen de las vidas, 
+     *
+     */
+    private void cargaVidas(){
+            arrVidas = new ArrayList<ImageIcon>();
+            
+            
+            
+            URL urlVida = this.getClass().getResource("heart.png");
+            
+            for (int iC = 0; iC < 5;++iC){
+                arrVidas.add(new ImageIcon(Toolkit.getDefaultToolkit().getImage(urlVida)));
+            }
     }
 
 
@@ -314,7 +335,7 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
         guardaOCarga();     // Carga un juego previo o almacena el juego actual
         mueveBala();        // Mueve a la bala si existe
         iTeclaActual = 0;   // Reestablece la útima tecla presionada a ninguna
-        mueveMalos();  // Mueve a los personajes malos
+        mueveMalos();       // Mueve a los personajes malos
         animaMalos();       // Actualiza la animacion de cada malo
         checaVidas();       // Resta vidas de acuerdo al valor de iContGolpe
         if (bFirstTime){
@@ -378,8 +399,9 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
     private void mueveBala(){
         if(arrBalas.size() > 0){
                 if (bMovBala) {
-                    for (Bala balBala: arrBalas){
-                       balBala.avanza();
+                    for (int iC = 0; iC < arrBalas.size(); ++iC){
+                        Bala basBala = (Bala) arrBalas.get(iC);
+                        basBala.avanza();
                     }
             }
         }
@@ -400,6 +422,8 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
             sMalo.play();
             iContGolpe = 0;
             iVelocidad += 2;
+            int iPosition = arrVidas.size() - 1;
+            arrVidas.remove(iPosition);
         }
     }
 
@@ -453,7 +477,6 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
         // Maneja las colisiones del jugador con los personajes
         checarColisionMalos(recJugador);
         if (bMovBala){
-            System.out.println("Enters");
             checarColisionBala();
         }
 
@@ -491,9 +514,10 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
             }
         }
         // Revisar si las balas se salieron del applet
-        for (Bala balBala: arrBalas){
-            if(balBala.getY() <= 0){
-                arrBalas.remove(balBala);
+        for (int iC = 0; iC < arrBalas.size();++iC){
+            Bala basBala = (Bala) arrBalas.get(iC);
+            if (basBala.getY() <= 0){
+                arrBalas.remove(basBala);
             }
         }
     }
@@ -620,12 +644,42 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
             graDibujo.drawString("No se cargo la imagen..", 20, 20);
         }
         if (arrBalas.size() > 0 && bPintarBala){
-            for (Bala balBala: arrBalas){
-                balBala.paint(graDibujo,this);
-            }
+            dibujaBalas(graDibujo);
+        }
+        if (arrVidas.size() > 0){
+            dibujaVidas(graDibujo);
         }
     }
-
+    /**
+     * 
+     * dibujaBalas
+     * 
+     * Metodo que dibuja las balas en el Applet
+     * 
+     * @param graDibujo 
+     */
+    private void dibujaBalas(Graphics graDibujo){
+        for (int iC = 0; iC < arrBalas.size();++iC){
+            Bala basBala = (Bala) arrBalas.get(iC);
+            basBala.paint(graDibujo,this);
+        }
+    }
+    
+    /**
+     * 
+     * dibujaVidas(Graphics graDibujo)
+     * 
+     * Metodo que dibuja las vidas en el Applet
+     * 
+     * @param graDibujo 
+     */
+    private void dibujaVidas(Graphics graDibujo){
+        int iX = 50;
+        for (ImageIcon imaVida: arrVidas){
+            imaVida.paintIcon(this, graDibujo, iX , 50);
+            iX += 48;
+        }
+    }
 
     /**
      * leeArchivo()
@@ -675,6 +729,9 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
         // Lee la posición previa del jugador
         jugPrincipal.setX(Integer.parseInt(fileIn.readLine()));
         jugPrincipal.setY(Integer.parseInt(fileIn.readLine()));
+        
+        //Lee la velocidad de los malos
+        iVelocidad = (Integer.parseInt(fileIn.readLine()));
     }
 
 
@@ -743,6 +800,9 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
         // Guarda las coordenadas actuales del jugador
         fileOut.println(jugPrincipal.getX());
         fileOut.println(jugPrincipal.getY());
+        
+        // Guarda la velocidad inicial de los personajes
+        fileOut.println(iVelocidad);
 
         fileOut.close();
     }
@@ -761,6 +821,7 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
         }
         leePersonajesArchivo(fileIn);
         fileIn.close();
+        cargaVidas();
     }
 
     @Override
@@ -797,7 +858,7 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
                 bPressedBala = false;
                 bReleased = false;
                 cDireccion = 'X';
-                cargaMalo();
+                cargaBala();
             }
         }
         if (iTeclaActual == KeyEvent.VK_P){
@@ -819,7 +880,7 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
                 bPressedBala = false;
                 bReleased = false;
                 cDireccion = 'A';
-                cargaMalo();
+                cargaBala();
             }
         }
         if (iTeclaActual == KeyEvent.VK_S){
@@ -828,7 +889,7 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
                 bPressedBala = false;
                 bReleased = false;
                 cDireccion = 'S';
-                cargaMalo();
+                cargaBala();
             }
         }
     }
@@ -837,7 +898,7 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
 
     }
 
-    public void cargaMalo(){
+    public void cargaBala(){
         bMovBala = true;
         bPintarBala = true;
         URL urlBala = this.getClass().getResource("bullet.png");
