@@ -58,4 +58,12 @@ public class Jugador extends Base {
     public Jugador(int iX, int iY, int iVX, int iVY,  Image imaImagen) {
         super(iX, iY, iVX, iVY, imaImagen);
     }
+
+    public void avanzaDerecha(){
+        this.setX(this.getX() + this.getVelX());
+    }
+
+    public void avanzaIzquierda(){
+        this.setX(this.getX() - this.getVelX());
+    }
 }

@@ -357,4 +357,9 @@ public class Base {
     public Animacion getAnimacion() {
         return aniPrincipal;
     }
+
+    public void avanza(){
+        this.setX(this.getX() + this.getVelX());
+        this.setY(this.getY() + this.getVelY());
+    }
 }
