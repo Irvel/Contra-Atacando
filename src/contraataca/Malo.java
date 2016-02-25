@@ -88,6 +88,8 @@ public class Malo extends Base {
     public void aumentaVel(){
         this.setVelY(this.getVelY() + iFACTORAUMENTO);
     }
+
+
     /**
      * 
      * avanza()
@@ -95,7 +97,6 @@ public class Malo extends Base {
      * Metodo que avanza a un malo hacia abajo
      * 
      */
-    
     public void avanza(int iVelocidad){
         this.setY(this.getY() + iVelocidad);
     }

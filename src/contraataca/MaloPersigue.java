@@ -41,7 +41,42 @@ package contraataca;
  * @version 0.1
  */
 public class MaloPersigue extends Malo{
+
+    /**
+     * Malo
+     *
+     * Metodo constructor usado para crear el objeto personaje con una
+     * animación de la clase <code>Animacion</code> y límites de velocidad
+     * predefinidos.
+     *
+     * @param iX es la <code>posicion en x</code> del objeto.
+     * @param iY es la <code>posicion en y</code> del objeto.
+     * @param anim es la <code>Animacion</code> del objeto.
+     *
+     */
     public MaloPersigue(int iX, int iY, int iVX, int iVY,  Animacion anim) {
         super(iX, iY, iVX, iVY, anim);
+    }
+
+    /**
+     *
+     * avanza()
+     *
+     * Metodo que avanza a un malo hacia el jugador en las coordenadas recibidas
+     *
+     */
+    public void avanza(int iX, int iY, int iVel){
+        if(this.getX() < iX){
+            this.setX(this.getX() + iVel);
+        }
+        else if(this.getX() > iX){
+            this.setX(this.getX() - iVel);
+        }
+        if(this.getX() < iY){
+            this.setY(this.getY() + iVel);
+        }
+        else if(this.getY() > iY){
+            this.setY(this.getY() - iVel);
+        }
     }
 }

@@ -59,22 +59,22 @@ public class Bala extends Base {
     public Bala (int iX, int iY, Image imaImagen,char cTipo){
         super(iX,iY,imaImagen);
         this.setVelX(0);
-        this.setVelY(-1);
+        this.setVelY(-10);
         cDireccion = cTipo;
     }
 
     public void avanza(){
        switch (cDireccion){
             case 'A':
-               this.setX(this.getX() - 1);
-               this.setY(this.getY() - 1);
+               this.setX(this.getX() - 10);
+               this.setY(this.getY() - 10);
                break;
             case 'S':
-               this.setX(this.getX() + 1);
-               this.setY(this.getY() - 1);
+               this.setX(this.getX() + 10);
+               this.setY(this.getY() - 10);
                break;
             default:
-                this.setY(this.getY() - 1);
+                this.setY(this.getY() - 10);
        }
     }
 }

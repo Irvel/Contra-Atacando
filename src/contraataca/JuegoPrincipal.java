@@ -56,9 +56,9 @@ import java.util.ArrayList;
 public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
 
     private Jugador jugPrincipal;               // El objeto del jugador
-    private Jugador Jugador;                 // El objeto del jugador
     private ArrayList<Bala> arrBalas;        // Lista de balas
     private ArrayList<Malo> arrMalos;        // Lista de personajes malos
+    private ArrayList<MaloPersigue> arrMalosSiguen;  // Lista de malos que persiguen
     private ArrayList<ImageIcon> arrVidas;   // Lista de vidas
     private Image imaImagenFondo;            // Para dibujar la imagen de fondo
     private Image imaGameOver;               // Para dibujar la imagen final
@@ -153,8 +153,6 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
     private void cargaVidas(){
             arrVidas = new ArrayList<ImageIcon>();
             
-            
-            
             URL urlVida = this.getClass().getResource("heart.png");
             
             for (int iC = 0; iC < 5;++iC){
@@ -242,7 +240,11 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
      */
     private void crearMalos(int iCantidad, ArrayList<CuadroDeAnimacion> arrCuadros) {
         arrMalos = new ArrayList<>();
-        for (int i = 0; i < iCantidad; i++) {
+        arrMalosSiguen = new ArrayList<>();
+        int iMalosPersiguen = iCantidad / 10;
+        int iMalosNormales = iCantidad - iMalosPersiguen;
+        iCantidadMalos -= iMalosPersiguen;
+        for (int i = 0; i < iMalosNormales; i++) {
             //Genera una posición aleatoria fuera del applet por la derecha
             int iPosX = getXRandom();
             int iPosY = getYRandom();
@@ -254,6 +256,19 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
                                   0,
                                   3,
                                   new Animacion(arrCuadros)));
+        }
+        for (int i = 0; i < iMalosPersiguen; i++) {
+            //Genera una posición aleatoria fuera del applet por la derecha
+            int iPosX = getXRandom();
+            int iPosY = getYRandom();
+
+            // Agregar un objeto nuevo malo con velocidad inicial de
+            // 3 en el eje Y y velocidad 0 en el eje X
+            arrMalosSiguen.add(new MaloPersigue(iPosX,
+                                          iPosY,
+                                          0,
+                                          3,
+                                          new Animacion(arrCuadros)));
         }
     }
 
@@ -292,7 +307,7 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
      */
     private int getYRandom(){
         // Generar coordenada tomando en cuenta la barra superior del JFrame
-        int iYRandom = (int)(Math.random() * (0 + 500) - 500 );
+        int iYRandom = (int)(Math.random() * (500) - 500 );
 
         return iYRandom;
     }
@@ -349,11 +364,17 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
     }
 
     private void dispara() {
-        if (iTeclaActual == KeyEvent.VK_SPACE){
-            // Control para que sólo dispare una bala cuando se deja
-            // presionada una tecla
-            if (bReleased){
+        // Control para que sólo dispare una bala cuando se deja
+        // presionada una tecla
+        if (bReleased){
+            if (iTeclaActual == KeyEvent.VK_SPACE) {
                 creaBala('N');
+            }
+            if (iTeclaActual == KeyEvent.VK_S){
+                creaBala('S');
+            }
+            if (iTeclaActual == KeyEvent.VK_A){
+                creaBala('A');
             }
         }
     }
@@ -416,11 +437,7 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
      *
      */
     private void mueveBala(){
-        if(arrBalas.size() > 0){
-            for(Bala balActual : arrBalas){
-                balActual.avanza();
-            }
-        }
+        arrBalas.forEach(Bala::avanza);
     }
 
 
@@ -455,6 +472,10 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
         for(Malo perMalo : arrMalos){
             perMalo.avanza(iVelocidad);
         }
+        for(MaloPersigue perMalo : arrMalosSiguen){
+            perMalo.avanza(jugPrincipal.getX(), jugPrincipal.getY(),
+                           iVelocidad);
+        }
     }
 
 
@@ -472,6 +493,10 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
         lTiempoActual += tiempoTranscurrido;
 
         for(Malo perMalo : arrMalos){
+            // Actualiza los cuadros en la animacion
+            perMalo.getAnimacion().actualiza(tiempoTranscurrido);
+        }
+        for(MaloPersigue perMalo : arrMalosSiguen){
             // Actualiza los cuadros en la animacion
             perMalo.getAnimacion().actualiza(tiempoTranscurrido);
         }
@@ -515,12 +540,32 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
                                     perMalo.getWidth(),
                                     perMalo.getHeight());
             for (int iC = 0; iC < arrBalas.size();++iC){
-                Bala balBala = (Bala) arrBalas.get(iC);
+                Bala balBala = arrBalas.get(iC);
                 Rectangle recBala;
                 recBala = new Rectangle(balBala.getX(),
                                        balBala.getY(),
                                        balBala.getWidth(),
                                        balBala.getHeight());
+                if(recBala.intersects(recMalo)){
+                    iScore += 10;
+                    arrBalas.remove(balBala);
+                    bPressedBala = true;
+                    reposicionaMalo(perMalo);
+                }
+            }
+        }
+        for(Malo perMalo: arrMalosSiguen){
+            recMalo = new Rectangle(perMalo.getX(),
+                                    perMalo.getY(),
+                                    perMalo.getWidth(),
+                                    perMalo.getHeight());
+            for (int iC = 0; iC < arrBalas.size();++iC){
+                Bala balBala = arrBalas.get(iC);
+                Rectangle recBala;
+                recBala = new Rectangle(balBala.getX(),
+                                        balBala.getY(),
+                                        balBala.getWidth(),
+                                        balBala.getHeight());
                 if(recBala.intersects(recMalo)){
                     iScore += 10;
                     arrBalas.remove(balBala);
@@ -553,6 +598,21 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
         Rectangle recMalo;
         // Revisar si el jugador está colisionando con un malo
         for(Malo perMalo: arrMalos){
+            recMalo = new Rectangle(perMalo.getX(),
+                                    perMalo.getY(),
+                                    perMalo.getWidth(),
+                                    perMalo.getHeight());
+            if(recJugador.intersects(recMalo)){
+                iContGolpe++;
+                reposicionaMalo(perMalo);
+            }
+
+            // Revisar si el personaje llegó al la orilla del applet
+            if(perMalo.getY() >= getHeight()){
+                reposicionaMalo(perMalo);
+            }
+        }
+        for(MaloPersigue perMalo: arrMalosSiguen){
             recMalo = new Rectangle(perMalo.getX(),
                                     perMalo.getY(),
                                     perMalo.getWidth(),
@@ -638,18 +698,21 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
                 for (Malo perMalo : arrMalos) {
                     perMalo.paint(graDibujo, this);
                 }
+                for (MaloPersigue perMalo : arrMalosSiguen) {
+                    perMalo.paint(graDibujo, this);
+                }
 
                 if (bPaused){
                     //Dibuja la imagen Pausada cuando se pausa el juego
                     graDibujo.drawImage(imaPaused,0,0,getWidth(),getHeight(), this);
                 }
 
-                graDibujo.drawString("Score: " + iScore + "   Vidas:" + iVidas,
-                                     50, 50);
+                graDibujo.drawString("Score: " + iScore, 50, 50);
             }
             else{
                 bGameOver = true;
                 // Dibuja la imagen de GameOver cuando se acaben las vidas
+                arrBalas.clear();
                 graDibujo.drawImage(imaGameOver,
                                     0,
                                     0,
@@ -669,6 +732,8 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
             dibujaVidas(graDibujo);
         }
     }
+
+
     /**
      * 
      * dibujaBalas
@@ -859,29 +924,7 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
     @Override
     public void keyPressed(KeyEvent key) {
         iTeclaActual = key.getKeyCode();
-        if (iTeclaActual == KeyEvent.VK_G){
-            try{
-                grabaArchivo();
-            }
-            catch(IOException e){
-            }
-        }
-        else if (iTeclaActual == KeyEvent.VK_C){
-            try{
-                leeArchivo();
-            }
-            catch (IOException e){
-            }
-        }
-        if (iTeclaActual == KeyEvent.VK_SPACE){
-            bPressedBala = true;
-            if (bPressedBala && bReleased){
-                bPressedBala = false;
-                bReleased = false;
-                cDireccion = 'X';
-                creaBala(cDireccion);
-            }
-        }
+
         if (iTeclaActual == KeyEvent.VK_P){
             bPaused = !bPaused;
         }
@@ -893,24 +936,6 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
                 catch(IOException e){
 
                 }
-            }
-        }
-        if (iTeclaActual == KeyEvent.VK_A){
-            bPressedBala = true;
-            if (bPressedBala && bReleased){
-                bPressedBala = false;
-                bReleased = false;
-                cDireccion = 'A';
-                creaBala(cDireccion);
-            }
-        }
-        if (iTeclaActual == KeyEvent.VK_S){
-            bPressedBala = true;
-            if (bPressedBala && bReleased){
-                bPressedBala = false;
-                bReleased = false;
-                cDireccion = 'S';
-                creaBala(cDireccion);
             }
         }
     }
@@ -940,12 +965,11 @@ public class JuegoPrincipal extends JFrame implements Runnable, KeyListener {
         if (iTeclaActual == KeyEvent.VK_SPACE){
             bReleased = true;
         }
-        if (iTeclaActual == KeyEvent.VK_S){
-            bReleased = true;
-        }
         if (iTeclaActual == KeyEvent.VK_A){
             bReleased = true;
-            bPressedBala = false;
+        }
+        if (iTeclaActual == KeyEvent.VK_S){
+            bReleased = true;
         }
     }
 
